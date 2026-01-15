@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/claude-code-settings.json",
+  "env": {
+    "AWS_REGION": "us-west-2",
+    "ANTHROPIC_MODEL": "[INFERENCE_PROFILE_ARN_DEFAULT]",
+    "ANTHROPIC_SONNET_MODEL": "[INFERENCE_PROFILE_ARN_SONNET]",
+    "ANTHROPIC_SMALL_FAST_MODEL": "[INFERENCE_PROFILE_ARN_HAIKU]",
+    "CLAUDE_CODE_USE_BEDROCK": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "mcp__analytics-graph-remote__*",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(../.venv/bin/dbt run-operation:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query:*)",
+      "Bash(../.venv/bin/python:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw && ../.venv/bin/python:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/python:*)",
+      "Bash(cd /Users/YOUR_USERNAME/Documents/GitHub/ad_hoc_analysis && ../.venv/bin/python:*)",
+      "Read(/Users/YOUR_USERNAME/.claude/skills/**)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); current_dir=$(echo \"$input\" | jq -r '.workspace.current_dir'); model_name=$(echo \"$input\" | jq -r '.model.display_name'); git_branch=$(cd \"$current_dir\" 2>/dev/null && git branch --show-current 2>/dev/null || echo ''); printf \"\\033[2m%s@%s:%s\" \"$(whoami)\" \"$(hostname -s)\" \"$(basename \"$current_dir\")\"; [ -n \"$git_branch\" ] && printf \" (%s)\" \"$git_branch\"; printf \" [%s]\\033[0m\" \"$model_name\""
+  },
+  "models": {
+    "default": "[INFERENCE_PROFILE_ARN_DEFAULT]",
+    "sonnet": "[INFERENCE_PROFILE_ARN_SONNET]",
+    "opus": "[INFERENCE_PROFILE_ARN_DEFAULT]",
+    "haiku_small_fast": "[INFERENCE_PROFILE_ARN_HAIKU]"
+  },
+  "mcpServers": {
+    "analytics-graph-remote": {
+      "type": "sse",
+      "url": "https://ut9wcfvypq.us-west-2.awsapprunner.com/sse"
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "looker": {
+      "type": "stdio",
+      "command": "/Users/YOUR_USERNAME/bin/toolbox",
+      "args": [
+        "--stdio",
+        "--prebuilt",
+        "looker"
+      ],
+      "env": {
+        "LOOKER_BASE_URL": "https://elationhealth.looker.com",
+        "LOOKER_CLIENT_ID": "[YOUR_LOOKER_CLIENT_ID]",
+        "LOOKER_CLIENT_SECRET": "[YOUR_LOOKER_CLIENT_SECRET]",
+        "LOOKER_VERIFY_SSL": "true"
+      }
+    }
+  }
+}
