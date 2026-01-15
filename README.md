@@ -4,7 +4,7 @@ Configuration files for Claude Code business analysis at Elation Health.
 
 ## Quick Start
 
-1. Follow the [Setup Guide](../Claude_Code_Analysis_Setup_Guide.md) to complete IT tickets and manual setup
+1. Follow the [Setup Guide](SETUP_GUIDE.md) to complete IT tickets and manual setup
 2. Copy these files to your Claude Code config:
 
 ```bash

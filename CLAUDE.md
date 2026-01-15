@@ -7,11 +7,11 @@ Configuration files for Claude Code business analysis at Elation Health.
 ```
 claude-analysis-setup/
 ├── CLAUDE.md              # This file
-├── README.md              # Setup instructions
+├── README.md              # Quick start instructions
+├── SETUP_GUIDE.md         # Full setup guide (IT tickets, manual steps)
 ├── settings.json          # Claude Code settings (copy to ~/.claude/)
 ├── commands/
-│   ├── analysis.md        # /analysis command
-│   └── presentation-analytics.md  # /presentation-analytics command
+│   └── analysis.md        # /analysis command
 └── skills/
     └── snowflake-query.md # Snowflake query skill
 ```
