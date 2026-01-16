@@ -36,22 +36,14 @@ Hi IT Team,
 
 I need AWS Bedrock access to use Claude Code for business analysis.
 
-Please provide:
-1. Add me to the AWS SSO profile "AIPlayground" (or equivalent Bedrock-enabled profile)
-2. Confirm I have access to the Bedrock inference profiles in us-west-2
-
-Details:
-- Purpose: Running Claude Code CLI for data analysis
-- AWS Region: us-west-2
-- Services needed: Amazon Bedrock (Claude models)
+Please add me to the "AWS - AI Playground" Okta push group.
 
 Thank you!
 ```
 
 **What you'll receive:**
-- AWS SSO profile name (e.g., `AIPlayground`)
-- Confirmation of Bedrock access
-- Inference profile ARNs (may be provided by data engineering)
+- Confirmation you've been added to the Okta group
+- AWS SSO profile name: `AIPlayground`
 
 ---
 
@@ -140,21 +132,47 @@ Thank you!
 
 ---
 
+### Ticket 5: Bedrock Inference Profiles (Required - submit after Ticket 1 is complete)
+
+**Submit to:** Infrastructure Team (#team_infra on Slack)
+
+**Subject:** Request Bedrock Inference Profile ARNs for Claude Code
+
+**Description:**
+```
+Hi Infra Team,
+
+I've been added to the AWS - AI Playground Okta group and need personal Bedrock inference profile ARNs to use Claude Code.
+
+Please create inference profiles for me in us-west-2 for:
+- Claude Sonnet (default model)
+- Claude Haiku (fast/cheap model)
+
+Thank you!
+```
+
+**What you'll receive:**
+- 2-3 inference profile ARNs (strings starting with `arn:aws:bedrock:us-west-2:...`)
+
+**Note:** You can start Phase 1 while waiting for these ARNs. Phase 2 requires all credentials including inference profiles.
+
+---
+
 ## Credentials Checklist
 
 After IT responds, fill in these values as you receive them:
 
-| Item | Value | Received? |
-|------|-------|-----------|
-| AWS SSO Profile | _________________ | ☐ |
-| AWS Region | us-west-2 | ☐ |
-| Inference Profile ARN (default) | _________________ | ☐ |
-| Inference Profile ARN (sonnet) | _________________ | ☐ |
-| Inference Profile ARN (haiku) | _________________ | ☐ |
-| Snowflake Username | _________________ | ☐ |
-| Snowflake Dev Schema | _________________ | ☐ |
-| Looker Client ID | _________________ | ☐ |
-| Looker Client Secret | _________________ | ☐ |
+| Item | Value | Received? | Ticket |
+|------|-------|-----------|--------|
+| AWS SSO Profile | `AIPlayground` | ☐ | #1 |
+| Snowflake Username | _________________ | ☐ | #2 |
+| Snowflake Dev Schema | _________________ | ☐ | #2 |
+| Looker Client ID | _________________ | ☐ | #3 |
+| Looker Client Secret | _________________ | ☐ | #3 |
+| Inference Profile ARN (default/sonnet) | _________________ | ☐ | #5 |
+| Inference Profile ARN (haiku) | _________________ | ☐ | #5 |
+
+**Important:** You need ALL credentials before starting Phase 2. Claude Code cannot run without inference profile ARNs.
 
 ---
 
@@ -267,20 +285,44 @@ Copy the output and send it with this message:
 
 ---
 
-## Phase 2: Claude-Assisted Setup (After IT Tickets Complete)
+## Phase 2: Claude-Assisted Setup (After ALL Tickets Complete)
 
-Once you have all credentials from IT, start Claude Code and let it complete the setup.
+You need ALL credentials before starting this phase, including your inference profile ARNs from #team_infra (Ticket #5).
 
-### Start Claude Code:
+### Step 1: Configure AWS SSO
+
+First, log into AWS:
 
 ```bash
-cd ~/Documents/GitHub
-claude
+aws sso login --profile AIPlayground
+```
+
+This opens a browser window - log in with your Okta credentials.
+
+### Step 2: Start Claude Code
+
+Run this command, replacing the placeholder ARNs with your actual inference profile ARNs from #team_infra:
+
+```bash
+cd ~/Documents/GitHub/claude-analysis-setup
+AWS_PROFILE=AIPlayground AWS_REGION=us-west-2 CLAUDE_CODE_USE_BEDROCK=1 \
+  ANTHROPIC_MODEL="[YOUR_DEFAULT_INFERENCE_PROFILE_ARN]" \
+  ANTHROPIC_SMALL_FAST_MODEL="[YOUR_HAIKU_INFERENCE_PROFILE_ARN]" \
+  claude
+```
+
+**Example with real ARNs:**
+```bash
+cd ~/Documents/GitHub/claude-analysis-setup
+AWS_PROFILE=AIPlayground AWS_REGION=us-west-2 CLAUDE_CODE_USE_BEDROCK=1 \
+  ANTHROPIC_MODEL="arn:aws:bedrock:us-west-2:303970654249:application-inference-profile/abc123xyz" \
+  ANTHROPIC_SMALL_FAST_MODEL="arn:aws:bedrock:us-west-2:303970654249:application-inference-profile/def456uvw" \
+  claude
 ```
 
 ---
 
-### Copy This Entire Prompt Into Claude Code:
+### Step 3: Copy This Entire Prompt Into Claude Code:
 
 ```
 I'm a non-technical user setting up Claude Code for data analysis. I've completed the manual setup:
@@ -290,12 +332,13 @@ I'm a non-technical user setting up Claude Code for data analysis. I've complete
 - Generated Snowflake keys (sent public key to #data-eng)
 
 I have received these credentials from IT:
-- AWS SSO Profile: [FILL IN - e.g., AIPlayground]
+- AWS SSO Profile: AIPlayground
 - Snowflake Username: [FILL IN - e.g., JANEDOE]
 - Snowflake Dev Schema: [FILL IN - e.g., jane_dev]
 - Looker Client ID: [FILL IN]
 - Looker Client Secret: [FILL IN]
-- Bedrock Inference Profile ARNs (if provided): [FILL IN or say "use defaults"]
+- Inference Profile ARN (default/sonnet): [FILL IN - from #team_infra]
+- Inference Profile ARN (haiku): [FILL IN - from #team_infra]
 
 Please complete my setup. For each step:
 1. Explain what you're doing in simple terms
@@ -346,17 +389,20 @@ Create/update my ~/.zshrc file using the template provided below, replacing plac
 - Copy settings.json from claude-analysis-setup to ~/.claude/
 - Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
 - Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
-- Update settings.json: replace YOUR_USERNAME with my macOS username (find with: whoami)
+- Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
+- Update all files: replace YOUR_DEV_SCHEMA with my Snowflake dev schema
+- Update settings.json: replace [INFERENCE_PROFILE_ARN_DEFAULT] and [INFERENCE_PROFILE_ARN_SONNET] with my default/sonnet ARN
+- Update settings.json: replace [INFERENCE_PROFILE_ARN_HAIKU] with my haiku ARN
 
 ### 7. Create dbt profile
 Create ~/.dbt/profiles.yml with my credentials.
 
 ### 8. Test AWS SSO login
-Run: aws sso login --profile [MY_AWS_SSO_PROFILE]
+Run: aws sso login --profile AIPlayground
 This will open a browser - I need to log in with my work credentials.
 
 ### 9. Test everything
-- Test AWS: aws sts get-caller-identity --profile [MY_AWS_SSO_PROFILE]
+- Test AWS: aws sts get-caller-identity --profile AIPlayground
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
 - Test Claude Code: clc (should start Claude with Bedrock)
@@ -537,7 +583,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 ## Getting Help
 
-- **AWS/Bedrock access:** #it-support
+- **AWS/Bedrock access (Okta group):** #it-support
+- **Inference Profile ARNs:** #team_infra
 - **Snowflake issues:** #data-eng
 - **Looker API keys:** #analytics
 - **1Password help:** #it-support
@@ -598,7 +645,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 ├─────────────────────────────────────────────┤
 │  HELP                                       │
 ├─────────────────────────────────────────────┤
-│  AWS/Bedrock: #it-support                   │
+│  AWS/Bedrock (Okta): #it-support            │
+│  Inference Profiles: #team_infra            │
 │  Snowflake: #data-eng                       │
 │  Looker: #analytics                         │
 │  1Password: #it-support                     │
@@ -612,11 +660,11 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
-| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE) | IT Ticket #2 response |
-| `[MY_DEV_SCHEMA]` | Your dev schema (lowercase) | IT Ticket #2 response |
-| `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | IT Ticket #3 response |
-| `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | IT Ticket #3 (store in 1Password) |
-| `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | IT Ticket #1 response |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default model | IT Ticket #1 or Data Eng |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | IT Ticket #1 or Data Eng |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | IT Ticket #1 or Data Eng |
+| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE) | Ticket #2 (#data-eng) |
+| `[MY_DEV_SCHEMA]` | Your dev schema (lowercase) | Ticket #2 (#data-eng) |
+| `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
+| `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
+| `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #5 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #5 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #5 (#team_infra) |
