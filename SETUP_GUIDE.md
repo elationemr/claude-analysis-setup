@@ -256,9 +256,9 @@ cd ~/Documents/GitHub
 Download the setup files:
 
 ```bash
-git clone git@github.com:AlohaHealth/claude-analysis-setup.git
-git clone git@github.com:AlohaHealth/snowflake_idw.git
-git clone git@github.com:AlohaHealth/internal_idw.git
+git clone git@github.com:elationemr/claude-analysis-setup.git
+git clone git@github.com:elationemr/snowflake_idw.git
+git clone git@github.com:elationemr/internal_idw.git
 ```
 
 ---
