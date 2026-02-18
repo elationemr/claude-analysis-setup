@@ -49,11 +49,11 @@ Thank you!
 
 ### Ticket 2: Snowflake Access (Required)
 
-**Team contact:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
+**General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
 **Access request channel:** [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-Choose the scenario that matches your needs:
+#### IMPORTANT: Choose the scenario that matches your needs
 
 #### Scenario A: Business Analysis Only (most common)
 
