@@ -76,13 +76,6 @@ Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOW
   - Database access: `DEV_IDW`
   - Dev schema convention: `FIRSTNAME_DEV`
 
-Send your Snowflake public key to Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC).
-A Data Platform teammate with `ACCOUNT_ADMIN` access will run:
-
-```sql
-ALTER USER <username> SET RSA_PUBLIC_KEY='<public_key_contents>';
-```
-
 ---
 
 ### Ticket 3: Looker API Credentials (Required)
