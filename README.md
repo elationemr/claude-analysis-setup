@@ -34,9 +34,9 @@ After copying, update these values in all files:
 | Placeholder | Replace With | How to Find |
 |-------------|--------------|-------------|
 | `YOUR_USERNAME` | Your macOS username | Run `whoami` in Terminal |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Eng |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Eng |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Eng |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Platform |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Platform |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Platform |
 | `[YOUR_LOOKER_CLIENT_ID]` | Looker API Client ID | From Analytics team |
 | `[YOUR_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | From Analytics team |
 
