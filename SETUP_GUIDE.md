@@ -51,36 +51,20 @@ Thank you!
 
 **General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
-#### Step 1: Choose your access type
+#### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-- **Scenario A: Business Analysis Only (most common)** - Use this if you only need to run business analyses.
-- **Scenario B: dbt Development (uncommon)** - Use this only if you will build or modify dbt models in `snowflake_idw`.
-- If you are unsure, choose **Scenario A**.
+Request: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
 
-#### Step 2: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
-
-- For **Scenario A**, request: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
-- For **Scenario B**, request: `SNOWFLAKE - DEVELOPER`
-
-#### Step 3: After access is provisioned, verify in Snowflake
+#### Step 2: After access is provisioned, verify in Snowflake
 
 Use these pages:
 - Profile (username): https://app.snowflake.com/elationhealth/ehdw/settings/profile
 - Preferences (default role and warehouse): https://app.snowflake.com/elationhealth/ehdw/settings/preferences
 
-Verify values for your scenario:
-
-- **Scenario A: Business Analysis Only**
-  - Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
-  - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
-  - Default Warehouse: `TEAM_PM_WH`
-
-- **Scenario B: dbt Development**
-  - Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
-  - Default Role: `SNOWFLAKE - DEVELOPER`
-  - Default Warehouse: `DBT_WH`
-  - Database access: `DEV_IDW`
-  - Dev schema convention: `FIRSTNAME_DEV`
+Verify these values:
+- Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
+- Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+- Default Warehouse: `TEAM_PM_WH`
 
 If any value does not match, contact Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC) and include what you expected vs. what you see.
 
@@ -172,7 +156,6 @@ After IT responds, fill in these values as you receive them:
 |------|-------|-----------|--------|
 | AWS SSO Profile | `AIPlayground` | ☐ | #1 |
 | Snowflake Username | _________________ | ☐ | #2 |
-| Snowflake Dev Schema | _________________ | ☐ | #2 |
 | Looker Client ID | _________________ | ☐ | #3 |
 | Looker Client Secret | _________________ | ☐ | #3 |
 | Inference Profile ARN (default/sonnet) | _________________ | ☐ | #5 |
@@ -350,7 +333,6 @@ I'm a non-technical user setting up Claude Code for data analysis. I've complete
 I have received these credentials from IT:
 - AWS SSO Profile: AIPlayground
 - Snowflake Username: [FILL IN - e.g., JANEDOE]
-- Snowflake Dev Schema: [FILL IN - e.g., jane_dev]
 - Looker Client ID: [FILL IN]
 - Looker Client Secret: [FILL IN]
 - Inference Profile ARN (default/sonnet): [FILL IN - from #team_infra]
@@ -406,7 +388,6 @@ Create/update my ~/.zshrc file using the template provided below, replacing plac
 - Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
 - Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
 - Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
-- Update all files: replace YOUR_DEV_SCHEMA with my Snowflake dev schema
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_DEFAULT] and [INFERENCE_PROFILE_ARN_SONNET] with my default/sonnet ARN
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_HAIKU] with my haiku ARN
 
@@ -480,9 +461,9 @@ export LOOKER_VERIFY_SSL="true"
 # Snowflake
 export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
 export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
-export SNOWFLAKE_WAREHOUSE="DBT_WH"
-export SNOWFLAKE_DATABASE="DEV_IDW"
-export SNOWFLAKE_SCHEMA="[MY_DEV_SCHEMA]"
+export SNOWFLAKE_WAREHOUSE="TEAM_PM_WH"
+export SNOWFLAKE_DATABASE="IDW"
+export SNOWFLAKE_SCHEMA="SHARED"
 export SNOWFLAKE_ROLE="TEAM_PRODUCT_MANAGEMENT"
 
 # AWS credentials for Bedrock
@@ -520,9 +501,9 @@ elation_health_snowflake:
       user: [MY_SNOWFLAKE_USERNAME]
       private_key_path: ~/.ssh/snowflake_private_key.p8
       role: TEAM_PRODUCT_MANAGEMENT
-      database: DEV_IDW
-      warehouse: DBT_WH
-      schema: [MY_DEV_SCHEMA]
+      database: IDW
+      warehouse: TEAM_PM_WH
+      schema: SHARED
       threads: 10
       client_session_keep_alive: False
       query_tag: DBT_ETL
@@ -677,7 +658,6 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
 | `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE, e.g., `FIRSTNAMELASTNAME`) | Ticket #2 ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)) |
-| `[MY_DEV_SCHEMA]` | Your dev schema (lowercase, dbt development only) | Ticket #2 ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)) |
 | `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
 | `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |

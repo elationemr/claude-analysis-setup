@@ -34,7 +34,6 @@ After copying, update these values in all files:
 | Placeholder | Replace With | How to Find |
 |-------------|--------------|-------------|
 | `YOUR_USERNAME` | Your macOS username | Run `whoami` in Terminal |
-| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema | e.g., `jane_dev` (from Data Eng) |
 | `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Eng |
 | `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Eng |
 | `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Eng |
@@ -60,6 +59,6 @@ clc
 
 ## Support
 
-- **Snowflake/dbt issues:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
+- **Snowflake issues:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
 - **Looker questions:** #analytics
 - **AWS/Bedrock access:** #it-support
