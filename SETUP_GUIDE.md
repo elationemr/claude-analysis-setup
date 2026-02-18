@@ -53,7 +53,18 @@ Thank you!
 
 #### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-Request: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+Copy and send this message:
+
+```
+Hi IT team,
+
+I'm setting up Claude Code for business analysis at Elation Health.
+I need Snowflake access to run read-only queries for internal reporting, ad-hoc analysis, and dashboard investigation.
+
+Please grant me: SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT
+
+Thank you!
+```
 
 #### Step 2: After access is provisioned, verify in Snowflake
 
