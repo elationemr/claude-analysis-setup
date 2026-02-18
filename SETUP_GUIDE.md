@@ -287,7 +287,17 @@ cat ~/.ssh/snowflake_public_key.pub
 ```
 
 Copy the output and send it with this message:
-> "Here's my public key for Snowflake access. Please register it with my user account. [paste key here]"
+> Hi Data Platform team - I'm setting up Snowflake key-pair authentication for Claude Code and need help from a Snowflake administrator.
+>
+> Could a Snowflake admin please set my RSA public key on my Snowflake user account?
+>
+> Reference: https://docs.snowflake.com/en/user-guide/key-pair-auth
+>
+> Command to run:
+> `ALTER USER <username> SET RSA_PUBLIC_KEY='<public_key_contents>';`
+>
+> My public key:
+> [paste key here]
 
 ---
 
