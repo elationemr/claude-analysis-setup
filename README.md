@@ -60,6 +60,6 @@ clc
 
 ## Support
 
-- **Snowflake/dbt issues:** #data-eng
+- **Snowflake/dbt issues:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
 - **Looker questions:** #analytics
 - **AWS/Bedrock access:** #it-support
