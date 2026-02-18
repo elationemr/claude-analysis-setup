@@ -500,17 +500,26 @@ elation_health_snowflake:
   outputs:
     dev:
       type: snowflake
+      # Use account identifier only (no https:// and no .snowflakecomputing.com)
       account: elationhealth-ehdw
       user: [MY_SNOWFLAKE_USERNAME]
       private_key_path: ~/.ssh/snowflake_private_key.p8
+      # Optional: include this only if your default Snowflake role is not already correct
       role: TEAM_PRODUCT_MANAGEMENT
       database: DEV_IDW
       warehouse: DBT_WH
+      # Use your personal dev schema prefix from #data-eng
       schema: [MY_DEV_SCHEMA]
       threads: 10
       client_session_keep_alive: False
       query_tag: DBT_ETL
 ```
+
+**Notes:**
+- You do **not** need to add `authenticator: snowflake_jwt` when you are using `private_key_path`.
+- `role:` can be omitted if your Snowflake user already has the correct default role. Keep it if your default role is missing or incorrect.
+- If `dbt debug` fails to connect, verify the Snowflake URL/account value from a known-good login. In dbt, `account` should be only the account identifier (example: `elationhealth-ehdw`), not a full URL.
+- Final model schema names are repo-defined. In `snowflake_idw`, your `[MY_DEV_SCHEMA]` value is typically used as a prefix (for example: `dev_idw.kynafong_sales_customers`).
 
 ---
 
@@ -575,6 +584,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | "aws: command not found" | Run: `brew install awscli` |
 | "Token has expired" | Run: `aws sso login --profile AIPlayground` |
 | "Snowflake authentication failed" | Check that #data-eng registered your public key |
+| "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake URL/account (use account identifier only, not full URL) |
+| "SQL access control error / wrong role" | Set `role: TEAM_PRODUCT_MANAGEMENT` in `~/.dbt/profiles.yml` or ask #data-eng to set your correct default role |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
 | 1Password prompts not working | Enable CLI integration in 1Password app Settings > Developer |
