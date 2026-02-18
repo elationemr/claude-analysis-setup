@@ -57,25 +57,23 @@ Thank you!
 
 Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
 
-Once access is granted, verify these values:
-- Snowflake username from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
-  - Username convention: `FIRSTNAMELASTNAME`
-- Default Role and Default Warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
-  - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
-  - Default Warehouse: `TEAM_PM_WH`
-
 #### Scenario B: dbt Development (uncommon)
 
 Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - DEVELOPER`
 
-Once access is granted, verify these values:
-- Default Role and Default Warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
-  - Default Role: `SNOWFLAKE - DEVELOPER`
-  - Default Warehouse: `DBT_WH`
-- Database access: `DEV_IDW`
-- Dev schema convention: `FIRSTNAME_DEV`
+**After access is provisioned, verify these values:**
 
-**After access is provisioned**
+- Snowflake username from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
+  - Username convention: `FIRSTNAMELASTNAME`
+- Default Role and Default Warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
+  - If you requested `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`:
+    - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+    - Default Warehouse: `TEAM_PM_WH`
+  - If you requested `SNOWFLAKE - DEVELOPER`:
+    - Default Role: `SNOWFLAKE - DEVELOPER`
+    - Default Warehouse: `DBT_WH`
+    - Database access: `DEV_IDW`
+    - Dev schema convention: `FIRSTNAME_DEV`
 
 Send your Snowflake public key to Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC).
 A Data Platform teammate with `ACCOUNT_ADMIN` access will run:
