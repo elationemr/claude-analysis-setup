@@ -51,30 +51,38 @@ Thank you!
 
 **General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
-#### IMPORTANT: Choose the scenario that matches your needs
+#### Step 1: Choose your access type
 
-#### Scenario A: Business Analysis Only (most common)
+- **Scenario A: Business Analysis Only (most common)** - Use this if you only need to run business analyses.
+- **Scenario B: dbt Development (uncommon)** - Use this only if you will build or modify dbt models in `snowflake_idw`.
+- If you are unsure, choose **Scenario A**.
 
-Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+#### Step 2: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-#### Scenario B: dbt Development (uncommon)
+- For **Scenario A**, request: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+- For **Scenario B**, request: `SNOWFLAKE - DEVELOPER`
 
-Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - DEVELOPER`
+#### Step 3: After access is provisioned, verify in Snowflake
 
-**After access is provisioned, confirm you received and verified:**
+Use these pages:
+- Profile (username): https://app.snowflake.com/elationhealth/ehdw/settings/profile
+- Preferences (default role and warehouse): https://app.snowflake.com/elationhealth/ehdw/settings/preferences
 
-- Snowflake username (e.g., `JANEDOE`) from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
-  - Username convention: `FIRSTNAMELASTNAME`
-- Confirmation of your default role and default warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
-  - If you requested `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`:
-    - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
-    - Default Warehouse: `TEAM_PM_WH`
-  - If you requested `SNOWFLAKE - DEVELOPER`:
-    - Default Role: `SNOWFLAKE - DEVELOPER`
-    - Default Warehouse: `DBT_WH`
-- Dev schema guidance (dbt development only):
+Verify values for your scenario:
+
+- **Scenario A: Business Analysis Only**
+  - Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
+  - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+  - Default Warehouse: `TEAM_PM_WH`
+
+- **Scenario B: dbt Development**
+  - Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
+  - Default Role: `SNOWFLAKE - DEVELOPER`
+  - Default Warehouse: `DBT_WH`
   - Database access: `DEV_IDW`
   - Dev schema convention: `FIRSTNAME_DEV`
+
+If any value does not match, contact Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC) and include what you expected vs. what you see.
 
 ---
 
