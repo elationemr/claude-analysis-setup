@@ -61,19 +61,20 @@ Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOW
 
 Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - DEVELOPER`
 
-**After access is provisioned, verify these values:**
+**After access is provisioned, confirm you received and verified:**
 
-- Snowflake username from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
+- Snowflake username (e.g., `JANEDOE`) from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
   - Username convention: `FIRSTNAMELASTNAME`
-- Default Role and Default Warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
+- Confirmation of your default role and default warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
   - If you requested `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`:
     - Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
     - Default Warehouse: `TEAM_PM_WH`
   - If you requested `SNOWFLAKE - DEVELOPER`:
     - Default Role: `SNOWFLAKE - DEVELOPER`
     - Default Warehouse: `DBT_WH`
-    - Database access: `DEV_IDW`
-    - Dev schema convention: `FIRSTNAME_DEV`
+- Dev schema guidance (dbt development only):
+  - Database access: `DEV_IDW`
+  - Dev schema convention: `FIRSTNAME_DEV`
 
 Send your Snowflake public key to Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC).
 A Data Platform teammate with `ACCOUNT_ADMIN` access will run:
@@ -81,11 +82,6 @@ A Data Platform teammate with `ACCOUNT_ADMIN` access will run:
 ```sql
 ALTER USER <username> SET RSA_PUBLIC_KEY='<public_key_contents>';
 ```
-
-**What you'll receive:**
-- Snowflake username (e.g., `JANEDOE`)
-- Confirmation of default role and default warehouse for your access scenario
-- Dev schema guidance if you requested dbt development access
 
 ---
 
