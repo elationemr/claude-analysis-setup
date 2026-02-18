@@ -51,13 +51,11 @@ Thank you!
 
 **General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
-**Access request channel:** [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
-
 #### IMPORTANT: Choose the scenario that matches your needs
 
 #### Scenario A: Business Analysis Only (most common)
 
-Request access to: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
 
 Once access is granted, verify these values:
 - Snowflake username from your profile page: https://app.snowflake.com/elationhealth/ehdw/settings/profile
@@ -68,7 +66,7 @@ Once access is granted, verify these values:
 
 #### Scenario B: dbt Development (uncommon)
 
-Request access to: `SNOWFLAKE - DEVELOPER`
+Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP): `SNOWFLAKE - DEVELOPER`
 
 Once access is granted, verify these values:
 - Default Role and Default Warehouse from preferences: https://app.snowflake.com/elationhealth/ehdw/settings/preferences
