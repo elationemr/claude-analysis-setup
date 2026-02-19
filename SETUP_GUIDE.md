@@ -26,15 +26,13 @@ Before starting technical setup, you need access credentials from IT. Submit the
 
 ### Ticket 1: AWS Bedrock Access (Required)
 
-**Submit to:** IT Support (#it-support or your IT ticketing system)
+**Submit to:** IT Team (#ask-it)
 
 **Subject:** Request AWS Bedrock Access for Claude Code
 
 **Description:**
 ```
-Hi IT Team,
-
-I need AWS Bedrock access to use Claude Code for business analysis.
+Hi @it, I need AWS Bedrock access to use Claude Code for business analysis.
 
 Please add me to the "AWS - AI Playground" Okta push group.
 
@@ -49,24 +47,21 @@ Thank you!
 
 ### Ticket 2: Snowflake Access (Required)
 
-**Submit to:** Data Engineering (#data-eng on Slack)
+**Submit to:** Data Platform (#team_data_platform on Slack)
 
 **Subject:** Request Snowflake Access for Claude Code Analysis
 
 **Description:**
 ```
-Hi Data Engineering Team,
+Hi Data Platform Team,
 
 I need Snowflake access to run business analyses using Claude Code.
 
 Please provide/confirm:
-1. My Snowflake username (usually FIRSTNAME_LASTNAME in uppercase)
-2. Create my dev schema (usually firstname_dev)
-3. Grant me the "TEAM_PRODUCT_MANAGEMENT" role
-4. Access to:
-   - DEV_IDW database
+1. My Snowflake username (usually FIRSTNAMELASTNAME in uppercase)
+2. Grant me the "TEAM_PRODUCT_MANAGEMENT" role
+3. Access to:
    - IDW production database (read-only for analysis)
-   - DBT_WH warehouse
 
 I will send my public key separately once I generate it during setup.
 
@@ -75,20 +70,19 @@ Thank you!
 
 **What you'll receive:**
 - Snowflake username (e.g., `JANEDOE`)
-- Dev schema prefix (e.g., `jane_dev`)
 - Confirmation of role and database access
 
 ---
 
 ### Ticket 3: Looker API Credentials (Required)
 
-**Submit to:** Analytics Team (#analytics on Slack)
+**Submit to:** Analytics Team (#ask-bst on Slack)
 
 **Subject:** Request Looker API Credentials for Claude Code
 
 **Description:**
 ```
-Hi Analytics Team,
+Hi @analytics,
 
 I need Looker API credentials to enable Claude Code to search dashboards and explore data definitions.
 
@@ -108,7 +102,7 @@ Thank you!
 
 ### Ticket 4: 1Password Vault Access (If not already set up)
 
-**Submit to:** IT Support (#it-support)
+**Submit to:** IT Team (#ask-it)
 
 **Subject:** 1Password CLI Setup for Development
 
@@ -668,3 +662,4 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #5 (#team_infra) |
 | `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #5 (#team_infra) |
 | `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #5 (#team_infra) |
+
