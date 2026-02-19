@@ -31,17 +31,17 @@ Before running ANY query, complete these steps IN ORDER:
 
 ### Step 1: Verify Table Exists
 ```bash
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT 1 FROM dev_idw.YOUR_DEV_SCHEMA_{schema}.{table} LIMIT 1"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT 1 FROM IDW.{SCHEMA}.{TABLE} LIMIT 1"}'
 ```
 
 ### Step 2: Get Exact Column Names
 ```bash
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "DESCRIBE TABLE dev_idw.YOUR_DEV_SCHEMA_{schema}.{table}"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "DESCRIBE TABLE IDW.{SCHEMA}.{TABLE}"}'
 ```
 
 ### Step 3: Simple Exploration (No String Literals)
 ```bash
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM dev_idw.YOUR_DEV_SCHEMA_{schema}.{table} LIMIT 5"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM IDW.{SCHEMA}.{TABLE} LIMIT 5"}'
 ```
 
 ## Schema Reference
@@ -57,20 +57,7 @@ Use `IDW.{SCHEMA}.{TABLE}` for querying production data:
 | IDW.FINANCE | Financial data |
 | IDW.OPS | Operations data |
 
-### Dev Tables (for testing model changes)
-Use `dev_idw.YOUR_DEV_SCHEMA_{domain}.{model_name}` only when testing local dbt model changes:
-
-| dbt Domain | Snowflake Schema |
-|------------|------------------|
-| staging | `YOUR_DEV_SCHEMA_staging` |
-| sales_customers | `YOUR_DEV_SCHEMA_sales_customers` |
-| shared | `YOUR_DEV_SCHEMA_shared` |
-| finance | `YOUR_DEV_SCHEMA_finance` |
-| ops | `YOUR_DEV_SCHEMA_ops` |
-
-**When to use which:**
-- **Ad-hoc analysis / reporting**: Use `IDW.*` (production)
-- **Testing dbt model changes**: Use `dev_idw.YOUR_DEV_SCHEMA_*` (dev)
+For this setup, use production tables (`IDW.{SCHEMA}.{TABLE}`) for ad-hoc analysis.
 
 ## Query Complexity Rules
 
@@ -83,7 +70,7 @@ Use `dev_idw.YOUR_DEV_SCHEMA_{domain}.{model_name}` only when testing local dbt 
 
 ```bash
 # Good: Simple aggregation
-../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT column_name, COUNT(*) as cnt FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.table_name GROUP BY 1 ORDER BY 2 DESC LIMIT 10"}'
+../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT column_name, COUNT(*) as cnt FROM IDW.SALES_CUSTOMERS.table_name GROUP BY 1 ORDER BY 2 DESC LIMIT 10"}'
 ```
 
 ### Medium Queries (Careful Escaping Required)
@@ -94,7 +81,7 @@ Use `dev_idw.YOUR_DEV_SCHEMA_{domain}.{model_name}` only when testing local dbt 
 
 ```bash
 # Good: WHERE with string literal
-../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.table_name WHERE status = '\''active'\'' LIMIT 10"}'
+../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM IDW.SALES_CUSTOMERS.table_name WHERE status = '\''active'\'' LIMIT 10"}'
 ```
 
 ### Complex Queries (BREAK INTO MULTIPLE SIMPLE QUERIES + STORE RESULTS)
@@ -196,7 +183,7 @@ dbt run-operation debug_query --args '{query: "SELECT 1"}'
 dbt run-operation debug_query --args '{query: "SELECT * FROM {{ ref('\''model_name'\'') }}"}'
 
 # CORRECT - use full table path
-dbt run-operation debug_query --args '{query: "SELECT * FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.model_name LIMIT 5"}'
+dbt run-operation debug_query --args '{query: "SELECT * FROM IDW.SALES_CUSTOMERS.model_name LIMIT 5"}'
 ```
 
 ### Guessing Column Names
@@ -205,7 +192,7 @@ dbt run-operation debug_query --args '{query: "SELECT * FROM dev_idw.YOUR_DEV_SC
 dbt run-operation debug_query --args '{query: "SELECT is_closed_won FROM ..."}'
 
 # CORRECT - verify columns first with DESCRIBE
-dbt run-operation debug_query --args '{query: "DESCRIBE TABLE dev_idw.YOUR_DEV_SCHEMA_sales_customers.table_name"}'
+dbt run-operation debug_query --args '{query: "DESCRIBE TABLE IDW.SALES_CUSTOMERS.table_name"}'
 # Then use actual column names: is_won, is_closed
 ```
 
@@ -220,29 +207,29 @@ cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt r
 
 ## Workflow Example
 
-**Goal**: Investigate why a test is failing with 1000+ warnings
+**Goal**: Investigate unexpected data quality issues in a production table
 
 ```bash
 # 1. First, understand the table structure
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "DESCRIBE TABLE dev_idw.YOUR_DEV_SCHEMA_sales_customers.opportunity_line_item_details"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "DESCRIBE TABLE IDW.SALES_CUSTOMERS.opportunity_line_item_details"}'
 
 # 2. Get row count and basic stats
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT COUNT(*) as total FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.opportunity_line_item_details"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT COUNT(*) as total FROM IDW.SALES_CUSTOMERS.opportunity_line_item_details"}'
 
 # 3. Check NULL counts for key columns
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT COUNT(*) as total, COUNT(contract_id) as with_contract FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.opportunity_line_item_details"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT COUNT(*) as total, COUNT(contract_id) as with_contract FROM IDW.SALES_CUSTOMERS.opportunity_line_item_details"}'
 
 # 4. Group by a column to understand distribution
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT is_won, is_closed, COUNT(*) as cnt FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.opportunity_line_item_details GROUP BY 1, 2"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT is_won, is_closed, COUNT(*) as cnt FROM IDW.SALES_CUSTOMERS.opportunity_line_item_details GROUP BY 1, 2"}'
 
 # 5. Filter with string literal if needed
-cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM dev_idw.YOUR_DEV_SCHEMA_sales_customers.opportunity_line_item_details WHERE stage_name = '\''Closed Won'\'' LIMIT 5"}'
+cd /Users/YOUR_USERNAME/Documents/GitHub/snowflake_idw/dbt && ../.venv/bin/dbt run-operation debug_query --args '{query: "SELECT * FROM IDW.SALES_CUSTOMERS.opportunity_line_item_details WHERE stage_name = '\''Closed Won'\'' LIMIT 5"}'
 ```
 
 ## Key Rules Summary
 
 1. **ALWAYS run DESCRIBE first** to get exact column names
-2. **ALWAYS use full table paths**: `dev_idw.YOUR_DEV_SCHEMA_{schema}.{table}`
+2. **ALWAYS use full table paths**: `IDW.{SCHEMA}.{TABLE}`
 3. **ALWAYS cd to dbt directory** before running commands
 4. **NEVER guess column names** - verify with DESCRIBE
 5. **NEVER use {{ ref() }}** in debug_query
