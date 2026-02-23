@@ -501,12 +501,15 @@ elation_health_snowflake:
     prod:
       type: snowflake
       account: GAA83698
+      # Format: FIRSTNAMELASTNAME (example: KYNAFONG)
+      # Use this same value in both `user` and `query_tag`.
       user: [MY_SNOWFLAKE_USERNAME]
       private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
 
       # Database and warehouse
       database: IDW
       warehouse: COMPUTE_WH
+      # Format: firstnamelastname_dev (example: kynafong_dev)
       schema: [MY_DEV_SCHEMA]
 
       # Connection settings
@@ -514,6 +517,7 @@ elation_health_snowflake:
       client_session_keep_alive: True
 
       # Query tag for tracking
+      # Keep [MY_SNOWFLAKE_USERNAME] identical to the `user` value above.
       query_tag: "dbt_[MY_SNOWFLAKE_USERNAME]_prod"
 ```
 
@@ -673,8 +677,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
-| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE) | Ticket #2 (#data-eng) |
-| `[MY_DEV_SCHEMA]` | Your dev schema (lowercase) | Ticket #2 (#data-eng) |
+| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username in format `FIRSTNAMELASTNAME` (UPPERCASE), used in both `user` and `query_tag` | Ticket #2 (#data-eng) |
+| `[MY_DEV_SCHEMA]` | Dev schema in format `firstnamelastname_dev` (lowercase) | Ticket #2 (#data-eng) |
 | `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
 | `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
