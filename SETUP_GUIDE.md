@@ -510,7 +510,7 @@ elation_health_snowflake:
     prod:
       type: snowflake
       account: GAA83698
-      # Format: FIRSTNAMELASTNAME (example: KYNAFONG)
+      # Format: FIRSTNAMELASTNAME (example: JANEDOE)
       # Use this same value in both `user` and `query_tag`.
       user: [MY_SNOWFLAKE_USERNAME]
       private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
@@ -518,7 +518,7 @@ elation_health_snowflake:
       # Database and warehouse
       database: IDW
       warehouse: COMPUTE_WH
-      # Format: firstnamelastname_dev (example: kynafong_dev)
+      # Format: firstnamelastname_dev (example: janedoe_dev)
       schema: [MY_DEV_SCHEMA]
 
       # Connection settings
