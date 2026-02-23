@@ -504,14 +504,14 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 ```yaml
 elation_health_snowflake:
-  target: dev
+  target: prod
   outputs:
-    dev:
+    prod:
       type: snowflake
-      account: elationhealth-ehdw
+      account: GAA83698
       user: [MY_SNOWFLAKE_USERNAME]
-      private_key_path: ~/.ssh/snowflake_private_key.p8
-      role: TEAM_PRODUCT_MANAGEMENT
+      private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
+      # role: TEAM_PRODUCT_MANAGEMENT
       database: IDW
       warehouse: TEAM_PM_WH
       schema: SHARED
@@ -519,6 +519,9 @@ elation_health_snowflake:
       client_session_keep_alive: False
       query_tag: DBT_ETL
 ```
+
+**Notes:**
+- `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #team_data_platform tells you to.
 
 ---
 
@@ -583,6 +586,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | "aws: command not found" | Run: `brew install awscli` |
 | "Token has expired" | Run: `aws sso login --profile AIPlayground` |
 | "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
+| "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake URL/account (use account identifier only, not full URL) |
+| "SQL access control error / wrong role" | Ask #team_data_platform to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
 | 1Password prompts not working | Enable CLI integration in 1Password app Settings > Developer |
