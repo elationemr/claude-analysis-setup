@@ -462,7 +462,7 @@ export LOOKER_CLIENT_ID="[MY_LOOKER_CLIENT_ID]"
 export LOOKER_VERIFY_SSL="true"
 
 # Snowflake
-export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
+export SNOWFLAKE_ACCOUNT="elationhealth"
 export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
 export SNOWFLAKE_WAREHOUSE="DBT_WH"
 export SNOWFLAKE_DATABASE="DEV_IDW"
@@ -496,30 +496,33 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 ```yaml
 elation_health_snowflake:
-  target: dev
+  target: prod
   outputs:
-    dev:
+    prod:
       type: snowflake
-      # Use account identifier only (no https:// and no .snowflakecomputing.com)
-      account: elationhealth-ehdw
+      account: elationhealth
       user: [MY_SNOWFLAKE_USERNAME]
-      private_key_path: ~/.ssh/snowflake_private_key.p8
-      # Optional: include this only if your default Snowflake role is not already correct
-      role: TEAM_PRODUCT_MANAGEMENT
-      database: DEV_IDW
-      warehouse: DBT_WH
-      # Use your personal dev schema prefix from #data-eng
+      authenticator: snowflake_jwt
+      private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
+
+      # Database and warehouse
+      database: IDW
+      warehouse: COMPUTE_WH
       schema: [MY_DEV_SCHEMA]
-      threads: 10
-      client_session_keep_alive: False
-      query_tag: DBT_ETL
+
+      # Connection settings
+      threads: 4
+      client_session_keep_alive: True
+
+      # Query tag for tracking
+      query_tag: "dbt_[MY_SNOWFLAKE_USERNAME]_prod"
 ```
 
 **Notes:**
-- You do **not** need to add `authenticator: snowflake_jwt` when you are using `private_key_path`.
-- `role:` can be omitted if your Snowflake user already has the correct default role. Keep it if your default role is missing or incorrect.
-- If `dbt debug` fails to connect, verify the Snowflake URL/account value from a known-good login. In dbt, `account` should be only the account identifier (example: `elationhealth-ehdw`), not a full URL.
-- Final model schema names are repo-defined. In `snowflake_idw`, your `[MY_DEV_SCHEMA]` value is typically used as a prefix (for example: `dev_idw.kynafong_sales_customers`).
+- This setup uses a single `prod` target only (no separate `dev` target in `profiles.yml`).
+- For key-pair auth in this profile, include `authenticator: snowflake_jwt` and `private_key_path`.
+- `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #data-eng tells you to.
+- If `dbt debug` fails to connect, verify the Snowflake account value from a known-good login. In dbt, `account` should be only the account identifier (example: `elationhealth`), not a full URL.
 
 ---
 
@@ -585,7 +588,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | "Token has expired" | Run: `aws sso login --profile AIPlayground` |
 | "Snowflake authentication failed" | Check that #data-eng registered your public key |
 | "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake URL/account (use account identifier only, not full URL) |
-| "SQL access control error / wrong role" | Set `role: TEAM_PRODUCT_MANAGEMENT` in `~/.dbt/profiles.yml` or ask #data-eng to set your correct default role |
+| "SQL access control error / wrong role" | Ask #data-eng to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
 | 1Password prompts not working | Enable CLI integration in 1Password app Settings > Developer |
