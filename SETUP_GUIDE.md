@@ -75,7 +75,7 @@ Thank you!
 
 **What you'll receive:**
 - Snowflake username (e.g., `JANEDOE`)
-- Dev schema prefix (e.g., `jane_dev`)
+- Dev schema prefix (e.g., `janedoe_dev`)
 - Confirmation of role and database access
 
 ---
@@ -334,7 +334,7 @@ I'm a non-technical user setting up Claude Code for data analysis. I've complete
 I have received these credentials from IT:
 - AWS SSO Profile: AIPlayground
 - Snowflake Username: [FILL IN - e.g., JANEDOE]
-- Snowflake Dev Schema: [FILL IN - e.g., jane_dev]
+- Snowflake Dev Schema: [FILL IN - e.g., janedoe_dev]
 - Looker Client ID: [FILL IN]
 - Looker Client Secret: [FILL IN]
 - Inference Profile ARN (default/sonnet): [FILL IN - from #team_infra]

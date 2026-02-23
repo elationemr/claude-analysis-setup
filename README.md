@@ -34,7 +34,7 @@ After copying, update these values in all files:
 | Placeholder | Replace With | How to Find |
 |-------------|--------------|-------------|
 | `YOUR_USERNAME` | Your macOS username | Run `whoami` in Terminal |
-| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema | e.g., `jane_dev` (from Data Platform) |
+| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema | e.g., `janedoe_dev` (from Data Platform) |
 | `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Platform |
 | `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Platform |
 | `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Platform |
