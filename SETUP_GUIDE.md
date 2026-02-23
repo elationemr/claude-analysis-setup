@@ -502,7 +502,6 @@ elation_health_snowflake:
       type: snowflake
       account: GAA83698
       user: [MY_SNOWFLAKE_USERNAME]
-      authenticator: snowflake_jwt
       private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
 
       # Database and warehouse
@@ -520,7 +519,7 @@ elation_health_snowflake:
 
 **Notes:**
 - This setup uses a single `prod` target only (no separate `dev` target in `profiles.yml`).
-- For key-pair auth in this profile, include `authenticator: snowflake_jwt` and `private_key_path`.
+- For key-pair auth in this profile, set `private_key_path`. `authenticator: snowflake_jwt` is not required.
 - `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #data-eng tells you to.
 - If `dbt debug` fails to connect, verify the Snowflake account value from a known-good login. In dbt, `account` should be only the account identifier (example: `GAA83698`), not a full URL.
 
