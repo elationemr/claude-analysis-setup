@@ -47,30 +47,35 @@ Thank you!
 
 ### Ticket 2: Snowflake Access (Required)
 
-**Submit to:** Data Platform (#team_data_platform on Slack)
+**General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
-**Subject:** Request Snowflake Access for Claude Code Analysis
+#### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-**Description:**
+Copy and send this message:
+
 ```
-Hi Data Platform Team,
+Hi IT team,
 
-I need Snowflake access to run business analyses using Claude Code.
+I'm setting up Claude Code for business analysis at Elation Health.
+I need Snowflake access to run read-only queries for internal reporting, ad-hoc analysis, and dashboard investigation.
 
-Please provide/confirm:
-1. My Snowflake username (usually FIRSTNAMELASTNAME in uppercase)
-2. Grant me the "TEAM_PRODUCT_MANAGEMENT" role
-3. Access to:
-   - IDW production database (read-only for analysis)
-
-I will send my public key separately once I generate it during setup.
+Please grant me: SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT
 
 Thank you!
 ```
 
-**What you'll receive:**
-- Snowflake username (e.g., `JANEDOE`)
-- Confirmation of role and database access
+#### Step 2: After access is provisioned, verify in Snowflake
+
+Use these pages:
+- Profile (username): https://app.snowflake.com/elationhealth/ehdw/settings/profile
+- Preferences (default role and warehouse): https://app.snowflake.com/elationhealth/ehdw/settings/preferences
+
+Verify these values:
+- Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
+- Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+- Default Warehouse: `TEAM_PM_WH`
+
+If any value does not match, contact Data Platform in [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC) and include what you expected vs. what you see.
 
 ---
 
@@ -160,7 +165,6 @@ After IT responds, fill in these values as you receive them:
 |------|-------|-----------|--------|
 | AWS SSO Profile | `AIPlayground` | ☐ | #1 |
 | Snowflake Username | _________________ | ☐ | #2 |
-| Snowflake Dev Schema | _________________ | ☐ | #2 |
 | Looker Client ID | _________________ | ☐ | #3 |
 | Looker Client Secret | _________________ | ☐ | #3 |
 | Inference Profile ARN (default/sonnet) | _________________ | ☐ | #5 |
@@ -268,14 +272,24 @@ openssl rsa -in ~/.ssh/snowflake_private_key.p8 -pubout -out ~/.ssh/snowflake_pu
 chmod 600 ~/.ssh/snowflake_private_key.p8
 ```
 
-**Important:** Now send your public key to #data-eng Slack:
+**Important:** Now send your public key to [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC):
 
 ```bash
 cat ~/.ssh/snowflake_public_key.pub
 ```
 
 Copy the output and send it with this message:
-> "Here's my public key for Snowflake access. Please register it with my user account. [paste key here]"
+> Hi Data Platform team - I'm setting up Snowflake key-pair authentication for Claude Code and need help from a Snowflake administrator.
+>
+> Could a Snowflake admin please set my RSA public key on my Snowflake user account?
+>
+> Reference: https://docs.snowflake.com/en/user-guide/key-pair-auth
+>
+> Command to run:
+> `ALTER USER <username> SET RSA_PUBLIC_KEY='<public_key_contents>';`
+>
+> My public key:
+> [paste key here]
 
 ---
 
@@ -323,12 +337,11 @@ I'm a non-technical user setting up Claude Code for data analysis. I've complete
 - Installed Homebrew, Python 3.12, Node.js 20, AWS CLI
 - Installed Claude Code
 - Cloned repos: claude-analysis-setup, snowflake_idw, internal_idw
-- Generated Snowflake keys (sent public key to #data-eng)
+- Generated Snowflake keys (sent public key to #team_data_platform)
 
 I have received these credentials from IT:
 - AWS SSO Profile: AIPlayground
 - Snowflake Username: [FILL IN - e.g., JANEDOE]
-- Snowflake Dev Schema: [FILL IN - e.g., jane_dev]
 - Looker Client ID: [FILL IN]
 - Looker Client Secret: [FILL IN]
 - Inference Profile ARN (default/sonnet): [FILL IN - from #team_infra]
@@ -384,7 +397,6 @@ Create/update my ~/.zshrc file using the template provided below, replacing plac
 - Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
 - Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
 - Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
-- Update all files: replace YOUR_DEV_SCHEMA with my Snowflake dev schema
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_DEFAULT] and [INFERENCE_PROFILE_ARN_SONNET] with my default/sonnet ARN
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_HAIKU] with my haiku ARN
 
@@ -458,9 +470,9 @@ export LOOKER_VERIFY_SSL="true"
 # Snowflake
 export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
 export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
-export SNOWFLAKE_WAREHOUSE="DBT_WH"
-export SNOWFLAKE_DATABASE="DEV_IDW"
-export SNOWFLAKE_SCHEMA="[MY_DEV_SCHEMA]"
+export SNOWFLAKE_WAREHOUSE="TEAM_PM_WH"
+export SNOWFLAKE_DATABASE="IDW"
+export SNOWFLAKE_SCHEMA="SHARED"
 export SNOWFLAKE_ROLE="TEAM_PRODUCT_MANAGEMENT"
 
 # AWS credentials for Bedrock
@@ -498,9 +510,9 @@ elation_health_snowflake:
       user: [MY_SNOWFLAKE_USERNAME]
       private_key_path: ~/.ssh/snowflake_private_key.p8
       role: TEAM_PRODUCT_MANAGEMENT
-      database: DEV_IDW
-      warehouse: DBT_WH
-      schema: [MY_DEV_SCHEMA]
+      database: IDW
+      warehouse: TEAM_PM_WH
+      schema: SHARED
       threads: 10
       client_session_keep_alive: False
       query_tag: DBT_ETL
@@ -568,7 +580,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 |---------|----------|
 | "aws: command not found" | Run: `brew install awscli` |
 | "Token has expired" | Run: `aws sso login --profile AIPlayground` |
-| "Snowflake authentication failed" | Check that #data-eng registered your public key |
+| "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
 | 1Password prompts not working | Enable CLI integration in 1Password app Settings > Developer |
@@ -579,10 +591,10 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 - **AWS/Bedrock access (Okta group):** #it-support
 - **Inference Profile ARNs:** #team_infra
-- **Snowflake issues:** #data-eng
+- **Snowflake issues:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
 - **Looker API keys:** #analytics
 - **1Password help:** #it-support
-- **This setup guide:** #data-eng
+- **This setup guide:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
 
 ---
 
@@ -601,7 +613,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 ~/.ssh/
 ├── snowflake_private_key.p8  (keep secret!)
-└── snowflake_public_key.pub  (sent to #data-eng)
+└── snowflake_public_key.pub  (sent to #team_data_platform)
 
 ~/.zshrc  (shell configuration with credentials)
 
@@ -641,7 +653,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 ├─────────────────────────────────────────────┤
 │  AWS/Bedrock (Okta): #it-support            │
 │  Inference Profiles: #team_infra            │
-│  Snowflake: #data-eng                       │
+│  Snowflake: #team_data_platform             │
 │  Looker: #analytics                         │
 │  1Password: #it-support                     │
 └─────────────────────────────────────────────┘
@@ -654,8 +666,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
-| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE) | Ticket #2 (#data-eng) |
-| `[MY_DEV_SCHEMA]` | Your dev schema (lowercase) | Ticket #2 (#data-eng) |
+| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE, e.g., `FIRSTNAMELASTNAME`) | Ticket #2 ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)) |
 | `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
 | `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |

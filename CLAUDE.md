@@ -110,7 +110,6 @@ Replace these in all config files:
 | Placeholder | Description |
 |-------------|-------------|
 | `YOUR_USERNAME` | macOS username (run `whoami`) |
-| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema (e.g., `jane_dev`) |
 | `[INFERENCE_PROFILE_ARN_*]` | AWS Bedrock inference profile ARNs |
 | `[YOUR_LOOKER_CLIENT_ID]` | Looker API Client ID |
 | `[YOUR_LOOKER_CLIENT_SECRET]` | Looker API Client Secret |
