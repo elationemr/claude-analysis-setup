@@ -34,10 +34,10 @@ After copying, update these values in all files:
 | Placeholder | Replace With | How to Find |
 |-------------|--------------|-------------|
 | `YOUR_USERNAME` | Your macOS username | Run `whoami` in Terminal |
-| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema | e.g., `jane_dev` (from Data Eng) |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Eng |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Eng |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Eng |
+| `YOUR_DEV_SCHEMA` | Your Snowflake dev schema | e.g., `jane_dev` (from Data Platform) |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default ARN | From IT/Data Platform |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet ARN | From IT/Data Platform |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku ARN | From IT/Data Platform |
 | `[YOUR_LOOKER_CLIENT_ID]` | Looker API Client ID | From Analytics team |
 | `[YOUR_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | From Analytics team |
 
@@ -60,6 +60,6 @@ clc
 
 ## Support
 
-- **Snowflake/dbt issues:** #data-eng
+- **Snowflake/dbt issues:** #team_data_platform
 - **Looker questions:** #analytics
 - **AWS/Bedrock access:** #it-support

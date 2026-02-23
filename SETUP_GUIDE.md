@@ -49,13 +49,13 @@ Thank you!
 
 ### Ticket 2: Snowflake Access (Required)
 
-**Submit to:** Data Engineering (#data-eng on Slack)
+**Submit to:** Data Platform (#team_data_platform on Slack)
 
 **Subject:** Request Snowflake Access for Claude Code Analysis
 
 **Description:**
 ```
-Hi Data Engineering Team,
+Hi Data Platform Team,
 
 I need Snowflake access to run business analyses using Claude Code.
 
@@ -274,7 +274,7 @@ openssl rsa -in ~/.ssh/snowflake_private_key.p8 -pubout -out ~/.ssh/snowflake_pu
 chmod 600 ~/.ssh/snowflake_private_key.p8
 ```
 
-**Important:** Now send your public key to #data-eng Slack:
+**Important:** Now send your public key to #team_data_platform Slack:
 
 ```bash
 cat ~/.ssh/snowflake_public_key.pub
@@ -329,7 +329,7 @@ I'm a non-technical user setting up Claude Code for data analysis. I've complete
 - Installed Homebrew, Python 3.12, Node.js 20, AWS CLI
 - Installed Claude Code
 - Cloned repos: claude-analysis-setup, snowflake_idw, internal_idw
-- Generated Snowflake keys (sent public key to #data-eng)
+- Generated Snowflake keys (sent public key to #team_data_platform)
 
 I have received these credentials from IT:
 - AWS SSO Profile: AIPlayground
@@ -522,7 +522,7 @@ elation_health_snowflake:
 ```
 
 **Notes:**
-- `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #data-eng tells you to.
+- `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #team_data_platform tells you to.
 
 ---
 
@@ -586,9 +586,9 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 |---------|----------|
 | "aws: command not found" | Run: `brew install awscli` |
 | "Token has expired" | Run: `aws sso login --profile AIPlayground` |
-| "Snowflake authentication failed" | Check that #data-eng registered your public key |
+| "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
 | "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake URL/account (use account identifier only, not full URL) |
-| "SQL access control error / wrong role" | Ask #data-eng to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
+| "SQL access control error / wrong role" | Ask #team_data_platform to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
 | 1Password prompts not working | Enable CLI integration in 1Password app Settings > Developer |
@@ -599,10 +599,10 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 - **AWS/Bedrock access (Okta group):** #it-support
 - **Inference Profile ARNs:** #team_infra
-- **Snowflake issues:** #data-eng
+- **Snowflake issues:** #team_data_platform
 - **Looker API keys:** #analytics
 - **1Password help:** #it-support
-- **This setup guide:** #data-eng
+- **This setup guide:** #team_data_platform
 
 ---
 
@@ -621,7 +621,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 ~/.ssh/
 ├── snowflake_private_key.p8  (keep secret!)
-└── snowflake_public_key.pub  (sent to #data-eng)
+└── snowflake_public_key.pub  (sent to #team_data_platform)
 
 ~/.zshrc  (shell configuration with credentials)
 
@@ -661,7 +661,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 ├─────────────────────────────────────────────┤
 │  AWS/Bedrock (Okta): #it-support            │
 │  Inference Profiles: #team_infra            │
-│  Snowflake: #data-eng                       │
+│  Snowflake: #team_data_platform             │
 │  Looker: #analytics                         │
 │  1Password: #it-support                     │
 └─────────────────────────────────────────────┘
@@ -674,8 +674,8 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
-| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username in format `FIRSTNAMELASTNAME` (UPPERCASE), used in both `user` and `query_tag` | Ticket #2 (#data-eng) |
-| `[MY_DEV_SCHEMA]` | Dev schema in format `firstnamelastname_dev` (lowercase) | Ticket #2 (#data-eng) |
+| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username in format `FIRSTNAMELASTNAME` (UPPERCASE), used in both `user` and `query_tag` | Ticket #2 (#team_data_platform) |
+| `[MY_DEV_SCHEMA]` | Dev schema in format `firstnamelastname_dev` (lowercase) | Ticket #2 (#team_data_platform) |
 | `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
 | `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
