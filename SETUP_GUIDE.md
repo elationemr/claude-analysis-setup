@@ -26,15 +26,13 @@ Before starting technical setup, you need access credentials from IT. Submit the
 
 ### Ticket 1: AWS Bedrock Access (Required)
 
-**Submit to:** IT Support (#it-support or your IT ticketing system)
+**Submit to:** IT Team (#ask-it)
 
 **Subject:** Request AWS Bedrock Access for Claude Code
 
 **Description:**
 ```
-Hi IT Team,
-
-I need AWS Bedrock access to use Claude Code for business analysis.
+Hi @it, I need AWS Bedrock access to use Claude Code for business analysis.
 
 Please add me to the "AWS - AI Playground" Okta push group.
 
@@ -83,13 +81,13 @@ If any value does not match, contact Data Platform in [#team_data_platform](http
 
 ### Ticket 3: Looker API Credentials (Required)
 
-**Submit to:** Analytics Team (#analytics on Slack)
+**Submit to:** Analytics Team (#ask-bst on Slack)
 
 **Subject:** Request Looker API Credentials for Claude Code
 
 **Description:**
 ```
-Hi Analytics Team,
+Hi @analytics,
 
 I need Looker API credentials to enable Claude Code to search dashboards and explore data definitions.
 
@@ -109,7 +107,7 @@ Thank you!
 
 ### Ticket 4: 1Password Vault Access (If not already set up)
 
-**Submit to:** IT Support (#it-support)
+**Submit to:** IT Team (#ask-it)
 
 **Subject:** 1Password CLI Setup for Development
 
@@ -675,3 +673,4 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 | `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #5 (#team_infra) |
 | `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #5 (#team_infra) |
 | `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #5 (#team_infra) |
+
