@@ -49,34 +49,35 @@ Thank you!
 
 ### Ticket 2: Snowflake Access (Required)
 
-**Submit to:** Data Platform (#team_data_platform on Slack)
+**General Questions:** Data Platform (#team_data_platform on Slack)
 
-**Subject:** Request Snowflake Access for Claude Code Analysis
+#### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
-**Description:**
+Copy and send this message:
+
 ```
-Hi Data Platform Team,
+Hi IT team,
 
-I need Snowflake access to run business analyses using Claude Code.
+I'm setting up Claude Code for business analysis at Elation Health.
+I need Snowflake access to run read-only queries for internal reporting, ad-hoc analysis, and dashboard investigation.
 
-Please provide/confirm:
-1. My Snowflake username (usually FIRSTNAME_LASTNAME in uppercase)
-2. Create my dev schema (usually firstname_dev)
-3. Grant me the "TEAM_PRODUCT_MANAGEMENT" role
-4. Access to:
-   - DEV_IDW database
-   - IDW production database (read-only for analysis)
-   - DBT_WH warehouse
-
-I will send my public key separately once I generate it during setup.
+Please grant me: SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT
 
 Thank you!
 ```
 
-**What you'll receive:**
-- Snowflake username (e.g., `JANEDOE`)
-- Dev schema prefix (e.g., `janedoe_dev`)
-- Confirmation of role and database access
+#### Step 2: After access is provisioned, verify in Snowflake
+
+Use these pages:
+- Profile (username): https://app.snowflake.com/elationhealth/ehdw/settings/profile
+- Preferences (default role and warehouse): https://app.snowflake.com/elationhealth/ehdw/settings/preferences
+
+Verify these values:
+- Snowflake username format: `FIRSTNAMELASTNAME` (example: `JANEDOE`)
+- Default Role: `SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT`
+- Default Warehouse: `TEAM_PM_WH`
+
+If any value does not match, contact Data Platform in #team_data_platform and include what you expected vs. what you see.
 
 ---
 
@@ -166,7 +167,6 @@ After IT responds, fill in these values as you receive them:
 |------|-------|-----------|--------|
 | AWS SSO Profile | `AIPlayground` | ☐ | #1 |
 | Snowflake Username | _________________ | ☐ | #2 |
-| Snowflake Dev Schema | _________________ | ☐ | #2 |
 | Looker Client ID | _________________ | ☐ | #3 |
 | Looker Client Secret | _________________ | ☐ | #3 |
 | Inference Profile ARN (default/sonnet) | _________________ | ☐ | #5 |
@@ -281,7 +281,17 @@ cat ~/.ssh/snowflake_public_key.pub
 ```
 
 Copy the output and send it with this message:
-> "Here's my public key for Snowflake access. Please register it with my user account. [paste key here]"
+> Hi Data Platform team - I'm setting up Snowflake key-pair authentication for Claude Code and need help from a Snowflake administrator.
+>
+> Could a Snowflake admin please set my RSA public key on my Snowflake user account?
+>
+> Reference: https://docs.snowflake.com/en/user-guide/key-pair-auth
+>
+> Command to run:
+> `ALTER USER <username> SET RSA_PUBLIC_KEY='<public_key_contents>';`
+>
+> My public key:
+> [paste key here]
 
 ---
 
@@ -390,7 +400,6 @@ Create/update my ~/.zshrc file using the template provided below, replacing plac
 - Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
 - Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
 - Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
-- Update all files: replace YOUR_DEV_SCHEMA with my Snowflake dev schema
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_DEFAULT] and [INFERENCE_PROFILE_ARN_SONNET] with my default/sonnet ARN
 - Update settings.json: replace [INFERENCE_PROFILE_ARN_HAIKU] with my haiku ARN
 
@@ -464,9 +473,9 @@ export LOOKER_VERIFY_SSL="true"
 # Snowflake
 export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
 export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
-export SNOWFLAKE_WAREHOUSE="DBT_WH"
-export SNOWFLAKE_DATABASE="DEV_IDW"
-export SNOWFLAKE_SCHEMA="[MY_DEV_SCHEMA]"
+export SNOWFLAKE_WAREHOUSE="TEAM_PM_WH"
+export SNOWFLAKE_DATABASE="IDW"
+export SNOWFLAKE_SCHEMA="SHARED"
 export SNOWFLAKE_ROLE="TEAM_PRODUCT_MANAGEMENT"
 
 # AWS credentials for Bedrock
