@@ -462,7 +462,7 @@ export LOOKER_CLIENT_ID="[MY_LOOKER_CLIENT_ID]"
 export LOOKER_VERIFY_SSL="true"
 
 # Snowflake
-export SNOWFLAKE_ACCOUNT="elationhealth"
+export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
 export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
 export SNOWFLAKE_WAREHOUSE="DBT_WH"
 export SNOWFLAKE_DATABASE="DEV_IDW"
@@ -500,7 +500,7 @@ elation_health_snowflake:
   outputs:
     prod:
       type: snowflake
-      account: elationhealth
+      account: GAA83698
       user: [MY_SNOWFLAKE_USERNAME]
       authenticator: snowflake_jwt
       private_key_path: "{{ env_var('HOME') }}/.ssh/snowflake_private_key.p8"
@@ -522,7 +522,7 @@ elation_health_snowflake:
 - This setup uses a single `prod` target only (no separate `dev` target in `profiles.yml`).
 - For key-pair auth in this profile, include `authenticator: snowflake_jwt` and `private_key_path`.
 - `role:` is optional. Leave it out if your Snowflake user already has the correct default role; add it only if #data-eng tells you to.
-- If `dbt debug` fails to connect, verify the Snowflake account value from a known-good login. In dbt, `account` should be only the account identifier (example: `elationhealth`), not a full URL.
+- If `dbt debug` fails to connect, verify the Snowflake account value from a known-good login. In dbt, `account` should be only the account identifier (example: `GAA83698`), not a full URL.
 
 ---
 
