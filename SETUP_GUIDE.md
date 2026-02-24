@@ -99,6 +99,26 @@ Thank you!
 
 ---
 
+#### Ticket D: internal_dw GitHub Repository Access (Required)
+
+**Submit to:** Analytics Team (#ask-bst on Slack)
+
+**Subject:** Request access to internal_dw GitHub repository
+
+**Description:**
+```
+Hi Analytics Team,
+
+I'm setting up Claude Code for business analysis and need read access to the internal_dw GitHub repository (elationemr/internal_dw).
+
+Thank you!
+```
+
+**What you'll receive:**
+- GitHub access to `elationemr/internal_dw`
+
+---
+
 #### Ticket C: 1Password Vault Access (If not already set up)
 
 **Submit to:** IT Support (#ask-it)
