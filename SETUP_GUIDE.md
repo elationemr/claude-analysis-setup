@@ -6,6 +6,17 @@ Set up Claude Code for business analysis with Snowflake, dbt, and Looker.
 
 ---
 
+## Choose Your Setup Path
+
+| Path | Use if... |
+|------|-----------|
+| **Claude Enterprise** | You have access to Claude Code Enterprise via Okta |
+| **AWS Bedrock** | You're using Elation's internal AWS infrastructure for AI |
+
+Not sure which? Ask in #data-platform.
+
+---
+
 ## How This Guide Works
 
 | Phase | What | Timeline |
@@ -24,34 +35,15 @@ Before starting technical setup, you need access credentials from IT. Submit the
 
 ---
 
-### Ticket 1: AWS Bedrock Access (Required)
-
-**Submit to:** IT Support (#it-support or your IT ticketing system)
-
-**Subject:** Request AWS Bedrock Access for Claude Code
-
-**Description:**
-```
-Hi IT Team,
-
-I need AWS Bedrock access to use Claude Code for business analysis.
-
-Please add me to the "AWS - AI Playground" Okta push group.
-
-Thank you!
-```
-
-**What you'll receive:**
-- Confirmation you've been added to the Okta group
-- AWS SSO profile name: `AIPlayground`
+### Tickets Required for Both Paths
 
 ---
 
-### Ticket 2: Snowflake Access (Required)
+#### Ticket A: Snowflake Access (Required)
 
 **General Questions:** Data Platform ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC))
 
-#### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
+##### Step 1: Request access in [#ask-it](https://elation.slack.com/archives/CABPVMDHP)
 
 Copy and send this message:
 
@@ -66,7 +58,7 @@ Please grant me: SNOWFLAKE - TEAM_PRODUCT_MANAGEMENT
 Thank you!
 ```
 
-#### Step 2: After access is provisioned, verify in Snowflake
+##### Step 2: After access is provisioned, verify in Snowflake
 
 Use these pages:
 - Profile (username): https://app.snowflake.com/elationhealth/ehdw/settings/profile
@@ -81,9 +73,9 @@ If any value does not match, contact Data Platform in [#team_data_platform](http
 
 ---
 
-### Ticket 3: Looker API Credentials (Required)
+#### Ticket B: Looker API Credentials (Required)
 
-**Submit to:** Analytics Team (#analytics on Slack)
+**Submit to:** Analytics Team (#ask-bst on Slack)
 
 **Subject:** Request Looker API Credentials for Claude Code
 
@@ -107,9 +99,9 @@ Thank you!
 
 ---
 
-### Ticket 4: 1Password Vault Access (If not already set up)
+#### Ticket C: 1Password Vault Access (If not already set up)
 
-**Submit to:** IT Support (#it-support)
+**Submit to:** IT Support (#ask-it)
 
 **Subject:** 1Password CLI Setup for Development
 
@@ -121,7 +113,7 @@ I need to use 1Password CLI to securely store API credentials for local developm
 
 Please confirm:
 1. I can install 1Password CLI (brew install --cask 1password-cli)
-2. I can create a personal vault called "LocalDev-APIKeys" for storing API tokens
+2. I can use my employee vault for storing API tokens
 3. My 1Password account has CLI integration enabled
 
 Thank you!
@@ -133,7 +125,58 @@ Thank you!
 
 ---
 
-### Ticket 5: Bedrock Inference Profiles (Required - submit after Ticket 1 is complete)
+### Claude Enterprise Path Only
+
+---
+
+#### Ticket 3: Claude Code Enterprise Access
+
+**Submit to:** IT team (#ask-it)
+
+**Subject:** Request Claude Code Enterprise access
+
+**Description:**
+```
+Hi IT team,
+
+I need access to Claude Code Enterprise for business analysis.
+
+Thank you!
+```
+
+**What you'll receive:**
+- Information on how to access Claude (Anthropic) via Okta
+
+---
+
+### AWS Bedrock Path Only
+
+---
+
+#### Ticket 1: AWS Bedrock Access (Required)
+
+**Submit to:** IT Support (#ask-it)
+
+**Subject:** Request AWS Bedrock Access for Claude Code
+
+**Description:**
+```
+Hi IT Team,
+
+I need AWS Bedrock access to use Claude Code for business analysis.
+
+Please add me to the "AWS - AI Playground" Okta push group.
+
+Thank you!
+```
+
+**What you'll receive:**
+- Confirmation you've been added to the Okta group
+- AWS SSO profile name: `AIPlayground`
+
+---
+
+#### Ticket 2: Bedrock Inference Profiles (Required - submit after Ticket 1 is complete)
 
 **Submit to:** Infrastructure Team (#team_infra on Slack)
 
@@ -161,22 +204,37 @@ Thank you!
 
 ## Credentials Checklist
 
-After IT responds, fill in these values as you receive them:
+After IT responds, fill in these values as you receive them.
+
+### Claude Enterprise Path
+
+| Item | Value | Received? | Ticket |
+|------|-------|-----------|--------|
+| Claude Enterprise access (via Okta) | _________________ | ☐ | #3 |
+| Snowflake Username | _________________ | ☐ | A |
+| Looker Client ID | _________________ | ☐ | B |
+| Looker Client Secret | _________________ | ☐ | B |
+
+**Important:** You need ALL credentials before starting Phase 2.
+
+### AWS Bedrock Path
 
 | Item | Value | Received? | Ticket |
 |------|-------|-----------|--------|
 | AWS SSO Profile | `AIPlayground` | ☐ | #1 |
-| Snowflake Username | _________________ | ☐ | #2 |
-| Looker Client ID | _________________ | ☐ | #3 |
-| Looker Client Secret | _________________ | ☐ | #3 |
-| Inference Profile ARN (default/sonnet) | _________________ | ☐ | #5 |
-| Inference Profile ARN (haiku) | _________________ | ☐ | #5 |
+| Snowflake Username | _________________ | ☐ | A |
+| Looker Client ID | _________________ | ☐ | B |
+| Looker Client Secret | _________________ | ☐ | B |
+| Inference Profile ARN (sonnet) | _________________ | ☐ | #2 |
+| Inference Profile ARN (haiku) | _________________ | ☐ | #2 |
 
-**Important:** You need ALL credentials before starting Phase 2. Claude Code cannot run without inference profile ARNs.
+**Important:** You need ALL credentials before starting Phase 2.
 
 ---
 
 ## Phase 1: Manual Setup (While Waiting for IT)
+
+Steps 1–3 and 5–6 are the same for both paths. Step 4 differs slightly.
 
 ### Step 1: Open Terminal
 
@@ -227,18 +285,22 @@ node --version
 
 ---
 
-### Step 4: Install Claude Code and AWS CLI
+### Step 4: Install Claude Code
 
-Run:
-
+**Both paths:**
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
+
+**AWS Bedrock path only — also install AWS CLI:**
+```bash
 brew install awscli
 ```
 
 Verify:
 ```bash
 claude --version
+# AWS Bedrock path only:
 aws --version
 ```
 
@@ -258,7 +320,7 @@ Download the setup files:
 ```bash
 git clone git@github.com:elationemr/claude-analysis-setup.git
 git clone git@github.com:elationemr/snowflake_idw.git
-git clone git@github.com:elationemr/internal_idw.git
+git clone git@github.com:elationemr/internal_dw.git
 ```
 
 ---
@@ -297,9 +359,18 @@ Copy the output and send it with this message:
 
 ## Phase 2: Claude-Assisted Setup (After ALL Tickets Complete)
 
-You need ALL credentials before starting this phase, including your inference profile ARNs from #team_infra (Ticket #5).
+### Step 1: Start Claude Code
 
-### Step 1: Configure AWS SSO
+**Claude Enterprise path:**
+
+```bash
+cd ~/Documents/GitHub/claude-analysis-setup
+claude
+```
+
+Claude Code will open a browser window — log in with your Okta credentials.
+
+**AWS Bedrock path:**
 
 First, log into AWS:
 
@@ -309,9 +380,7 @@ aws sso login --profile AIPlayground
 
 This opens a browser window - log in with your Okta credentials.
 
-### Step 2: Start Claude Code
-
-Run this command, replacing the placeholder ARNs with your actual inference profile ARNs from #team_infra:
+Then launch Claude Code with your inference profile ARNs from #team_infra:
 
 ```bash
 cd ~/Documents/GitHub/claude-analysis-setup
@@ -332,21 +401,110 @@ AWS_PROFILE=AIPlayground AWS_REGION=us-west-2 CLAUDE_CODE_USE_BEDROCK=1 \
 
 ---
 
-### Step 3: Copy This Entire Prompt Into Claude Code:
+### Step 2: Copy This Prompt Into Claude Code
+
+Find your path below, fill in your credentials, then paste the entire prompt.
+
+---
+
+**Claude Enterprise path prompt:**
+
+```
+I'm a non-technical user setting up Claude Code for data analysis. I've completed the manual setup:
+- Installed Homebrew, Python 3.12, Node.js 20
+- Installed Claude Code
+- Cloned repos: claude-analysis-setup, snowflake_idw, internal_dw
+- Generated Snowflake keys (sent public key to #team_data_platform)
+- Logged into Claude Code via Okta
+
+Setup path: Claude Enterprise
+
+I have received these credentials from IT:
+- Snowflake Username: [FILL IN - e.g., JANEDOE]
+- Looker Client ID: [FILL IN]
+- Looker Client Secret: [FILL IN]
+
+Please complete my setup. For each step:
+1. Explain what you're doing in simple terms
+2. Run the commands for me
+3. Tell me if I need to do anything
+4. Confirm it worked before moving on
+
+## Setup Steps to Complete:
+
+### 1. Create output folder
+Create ~/Documents/GitHub/ad_hoc_analysis
+
+### 2. Set up dbt (data tool)
+- Create Python environment in snowflake_idw folder
+- Install dbt-snowflake and pandas packages
+- Verify dbt works
+
+### 3. Install 1Password CLI
+- Install via: brew install --cask 1password-cli
+- Help me sign in: op signin
+- Tell me how to enable CLI in 1Password app:
+  1. Open 1Password app
+  2. Go to Settings (top left menu under File)
+  3. Click "Developer" in sidebar
+  4. Enable "Integrate with 1Password CLI"
+  5. Click "Security" in the left sidebar
+  6. Enable "Touch ID" for CLI authentication
+
+### 4. Add to 1Password Employee vault and store credentials
+Guide me to create items in 1Password following this EXACT structure:
+
+#### Create "Looker API" item (type: API Credential)
+Standard fields used:
+- vault: Employee
+- username: (leave empty or note)
+- credential: (leave empty or note)
+Custom fields to add:
+- client-secret: [MY_LOOKER_CLIENT_SECRET]
+
+Note: Snowflake uses key-pair authentication (private key file), not password — no Snowflake item needed in 1Password.
+
+### 5. Configure shell environment
+Create/update my ~/.zshrc using the Claude Enterprise template in SETUP_GUIDE.md, replacing all placeholder values with my actual credentials.
+
+### 6. Copy Claude config files
+- Create ~/.claude/commands and ~/.claude/skills folders
+- Copy settings.json from claude-analysis-setup to ~/.claude/
+- Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
+- Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
+- Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
+
+### 7. Create dbt profile
+Create ~/.dbt/profiles.yml with my credentials.
+
+### 8. Test everything
+- Test Snowflake connection: dbt debug
+- Test 1Password: load_api_keys
+- Test Claude Code: clc (should start Claude Code)
+- Run a simple /analysis command
+
+Let's start with step 1!
+```
+
+---
+
+**AWS Bedrock path prompt:**
 
 ```
 I'm a non-technical user setting up Claude Code for data analysis. I've completed the manual setup:
 - Installed Homebrew, Python 3.12, Node.js 20, AWS CLI
 - Installed Claude Code
-- Cloned repos: claude-analysis-setup, snowflake_idw, internal_idw
+- Cloned repos: claude-analysis-setup, snowflake_idw, internal_dw
 - Generated Snowflake keys (sent public key to #team_data_platform)
+
+Setup path: AWS Bedrock
 
 I have received these credentials from IT:
 - AWS SSO Profile: AIPlayground
 - Snowflake Username: [FILL IN - e.g., JANEDOE]
 - Looker Client ID: [FILL IN]
 - Looker Client Secret: [FILL IN]
-- Inference Profile ARN (default/sonnet): [FILL IN - from #team_infra]
+- Inference Profile ARN (sonnet): [FILL IN - from #team_infra]
 - Inference Profile ARN (haiku): [FILL IN - from #team_infra]
 
 Please complete my setup. For each step:
@@ -370,28 +528,27 @@ Create ~/Documents/GitHub/ad_hoc_analysis
 - Help me sign in: op signin
 - Tell me how to enable CLI in 1Password app:
   1. Open 1Password app
-  2. Go to Settings (gear icon)
+  2. Go to Settings (top left menu under File)
   3. Click "Developer" in sidebar
   4. Enable "Integrate with 1Password CLI"
-  5. Enable "Touch ID" for CLI authentication
+  5. Click "Security" in the left sidebar
+  6. Enable "Touch ID" for CLI authentication
 
-### 4. Create 1Password vault and store credentials
+### 4. Add to 1Password Employee vault and store credentials
 Guide me to create items in 1Password following this EXACT structure:
 
-#### Create vault
-- Name: `LocalDev-APIKeys`
-
-#### Create "Looker" item (type: API Credential)
+#### Create "Looker API" item (type: API Credential)
 Standard fields used:
+- vault: Employee
 - username: (leave empty or note)
 - credential: (leave empty or note)
 Custom fields to add:
 - client-secret: [MY_LOOKER_CLIENT_SECRET]
 
-**Note:** Snowflake authentication uses key-pair (private key file), not password, so no Snowflake item is needed in 1Password.
+Note: Snowflake uses key-pair authentication (private key file), not password — no Snowflake item needed in 1Password.
 
 ### 5. Configure shell environment
-Create/update my ~/.zshrc file using the template provided below, replacing placeholder values with my actual credentials.
+Create/update my ~/.zshrc using the AWS Bedrock template in SETUP_GUIDE.md, replacing all placeholder values with my actual credentials.
 
 ### 6. Copy Claude config files
 - Create ~/.claude/commands and ~/.claude/skills folders
@@ -399,8 +556,6 @@ Create/update my ~/.zshrc file using the template provided below, replacing plac
 - Copy analysis.md from claude-analysis-setup/commands/ to ~/.claude/commands/
 - Copy snowflake-query.md from claude-analysis-setup/skills/ to ~/.claude/skills/
 - Update all files: replace YOUR_USERNAME with my macOS username (find with: whoami)
-- Update settings.json: replace [INFERENCE_PROFILE_ARN_DEFAULT] and [INFERENCE_PROFILE_ARN_SONNET] with my default/sonnet ARN
-- Update settings.json: replace [INFERENCE_PROFILE_ARN_HAIKU] with my haiku ARN
 
 ### 7. Create dbt profile
 Create ~/.dbt/profiles.yml with my credentials.
@@ -421,9 +576,11 @@ Let's start with step 1!
 
 ---
 
-## Shell Configuration Template (~/.zshrc)
+## Shell Configuration Templates (~/.zshrc)
 
-Claude Code will help you create this file with your actual values:
+Claude Code will help you create this file with your actual values during Phase 2.
+
+### Claude Enterprise Path
 
 ```bash
 export PATH="/opt/homebrew/bin:$PATH"
@@ -440,8 +597,7 @@ export PATH=~/.npm-global/bin:$PATH
 # Uses personal auth with Touch ID - works offline after initial sync
 
 load_api_keys() {
-  # Looker
-  export LOOKER_CLIENT_SECRET="$(op read 'op://LocalDev-APIKeys/Looker/client-secret' 2>/dev/null)"
+  export LOOKER_CLIENT_SECRET="$(op read 'op://Employee/Looker API/client-secret' 2>/dev/null)"
   echo "✓ API keys loaded from 1Password"
 }
 
@@ -477,8 +633,69 @@ export SNOWFLAKE_DATABASE="IDW"
 export SNOWFLAKE_SCHEMA="SHARED"
 export SNOWFLAKE_ROLE="TEAM_PRODUCT_MANAGEMENT"
 
-# AWS credentials for Bedrock
-export AWS_PROFILE="[MY_AWS_SSO_PROFILE]"
+# ===========================================
+# Claude Code launcher
+# ===========================================
+
+alias clc='claude'
+export PATH="$HOME/.npm-global/bin:$PATH"
+```
+
+### AWS Bedrock Path
+
+```bash
+export PATH="/opt/homebrew/bin:$PATH"
+
+# Google Cloud SDK (if installed)
+if [ -f '/Users/[MY_USERNAME]/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/[MY_USERNAME]/Documents/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/[MY_USERNAME]/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/[MY_USERNAME]/Documents/google-cloud-sdk/completion.zsh.inc'; fi
+
+export PATH=~/.npm-global/bin:$PATH
+
+# ===========================================
+# API Credentials (loaded from 1Password)
+# ===========================================
+# Uses personal auth with Touch ID - works offline after initial sync
+
+load_api_keys() {
+  export LOOKER_CLIENT_SECRET="$(op read 'op://Employee/Looker API/client-secret' 2>/dev/null)"
+  echo "✓ API keys loaded from 1Password"
+}
+
+# Lazy-load API keys on first interactive command
+_lazy_load_api_keys() {
+  if [[ -z "$LOOKER_CLIENT_SECRET" ]]; then
+    echo "🔐 Loading API keys from 1Password... (Ctrl+C to skip)"
+    load_api_keys
+  fi
+  add-zsh-hook -d precmd _lazy_load_api_keys
+}
+
+# Only set up hook in interactive shells with real TTY (skip IDE background shells)
+if [[ $- == *i* ]] && [[ -t 0 ]] && [[ -z "$LOOKER_CLIENT_SECRET" ]] && [[ -z "$VSCODE_INJECTION" ]] && [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _lazy_load_api_keys
+fi
+
+# ===========================================
+# Non-secret configuration values
+# ===========================================
+
+# Looker
+export LOOKER_BASE_URL="https://elationhealth.looker.com"
+export LOOKER_CLIENT_ID="[MY_LOOKER_CLIENT_ID]"
+export LOOKER_VERIFY_SSL="true"
+
+# Snowflake
+export SNOWFLAKE_ACCOUNT="elationhealth-ehdw"
+export SNOWFLAKE_USER="[MY_SNOWFLAKE_USERNAME]"
+export SNOWFLAKE_WAREHOUSE="TEAM_PM_WH"
+export SNOWFLAKE_DATABASE="IDW"
+export SNOWFLAKE_SCHEMA="SHARED"
+export SNOWFLAKE_ROLE="TEAM_PRODUCT_MANAGEMENT"
+
+# AWS
+export AWS_PROFILE="AIPlayground"
 export AWS_REGION="us-west-2"
 
 # ===========================================
@@ -486,8 +703,8 @@ export AWS_REGION="us-west-2"
 # ===========================================
 
 launch_claude() {
-  aws sso login --profile [MY_AWS_SSO_PROFILE]
-  AWS_PROFILE=[MY_AWS_SSO_PROFILE] AWS_REGION=us-west-2 CLAUDE_CODE_USE_BEDROCK=1 \
+  aws sso login --profile AIPlayground
+  AWS_PROFILE=AIPlayground AWS_REGION=us-west-2 CLAUDE_CODE_USE_BEDROCK=1 \
     ANTHROPIC_MODEL="[INFERENCE_PROFILE_ARN_DEFAULT]" \
     ANTHROPIC_SONNET_MODEL="[INFERENCE_PROFILE_ARN_SONNET]" \
     ANTHROPIC_SMALL_FAST_MODEL="[INFERENCE_PROFILE_ARN_HAIKU]" \
@@ -501,6 +718,8 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 ---
 
 ## dbt Profile Template (~/.dbt/profiles.yml)
+
+Same for both paths:
 
 ```yaml
 elation_health_snowflake:
@@ -527,18 +746,13 @@ elation_health_snowflake:
 
 ## 1Password Structure Reference
 
-### Vault: `LocalDev-APIKeys`
+### Vault: `Employee`
 
-| Item Name | Type | Custom Fields |
-|-----------|------|---------------|
-| **Looker** | API Credential | client-secret |
+| Item Name | Type | Fields | Path |
+|-----------|------|--------|------|
+| **Looker API** | API Credential | client-secret (custom) | `op://Employee/Looker API/client-secret` |
 
-**Note:** Snowflake uses key-pair authentication (private key file at `~/.ssh/snowflake_private_key.p8`), not password.
-
-### 1Password CLI path:
-```bash
-op://LocalDev-APIKeys/Looker/client-secret
-```
+**Note:** Snowflake uses key-pair authentication (private key file at `~/.ssh/snowflake_private_key.p8`), not a password. Claude Enterprise authentication is handled via Okta — no additional 1Password item needed.
 
 ---
 
@@ -548,11 +762,11 @@ op://LocalDev-APIKeys/Looker/client-secret
 |------|-------------|--------|
 | 1-2 | Runs commands | Watch and wait |
 | 3 | Installs 1Password CLI | Enter your 1Password password; enable CLI in app |
-| 4 | Guides 1Password setup | Create vault and items in 1Password app |
+| 4 | Guides 1Password setup | Add item to Employee vault in 1Password app |
 | 5 | Updates .zshrc | Click "Accept" and provide your credential values |
 | 6 | Copies config files | Click "Accept" for each file |
 | 7 | Creates dbt profile | Click "Accept" |
-| 8 | Tests AWS login | Log in via browser when it opens |
+| 8 | Tests AWS login *(AWS path only)* | Log in via browser when it opens |
 | 9 | Tests everything | Watch for success messages |
 
 ---
@@ -567,7 +781,7 @@ clc
 
 # Option 2: Manual launch
 load_api_keys
-aws sso login --profile AIPlayground
+aws sso login --profile AIPlayground   # AWS Bedrock path only
 cd ~/Documents/GitHub
 claude
 
@@ -575,7 +789,7 @@ claude
 /analysis "How many active accounts do we have?"
 ```
 
-The `clc` shortcut handles AWS login and launches Claude Code with all the right settings.
+The `clc` shortcut handles authentication and launches Claude Code with all the right settings.
 
 ---
 
@@ -583,10 +797,10 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 | Problem | Solution |
 |---------|----------|
-| "aws: command not found" | Run: `brew install awscli` |
-| "Token has expired" | Run: `aws sso login --profile AIPlayground` |
+| "aws: command not found" | Run: `brew install awscli` *(AWS path only)* |
+| "Token has expired" | Run: `aws sso login --profile AIPlayground` *(AWS path only)* |
 | "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
-| "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake URL/account (use account identifier only, not full URL) |
+| "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake account identifier (use account identifier only, not full URL) |
 | "SQL access control error / wrong role" | Ask #team_data_platform to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
 | "Looker credentials not found" | Run: `op signin`, then `load_api_keys` |
 | "op: command not found" | Run: `brew install --cask 1password-cli` |
@@ -596,11 +810,12 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 ## Getting Help
 
-- **AWS/Bedrock access (Okta group):** #it-support
+- **AWS/Bedrock access (Okta group):** #ask-it
 - **Inference Profile ARNs:** #team_infra
 - **Snowflake issues:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
-- **Looker API keys:** #analytics
-- **1Password help:** #it-support
+- **Looker API keys:** #ask-bst
+- **1Password help:** #ask-it
+- **Claude Enterprise access:** #ask-it
 - **This setup guide:** [#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)
 
 ---
@@ -628,10 +843,10 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 ├── ad_hoc_analysis/        # Your reports
 ├── claude-analysis-setup/  # Config source
 ├── snowflake_idw/          # Data models
-└── internal_idw/           # Dashboards
+└── internal_dw/            # Dashboards
 
-1Password (LocalDev-APIKeys vault):
-└── Looker (client-secret)
+1Password (Employee vault):
+└── Looker API (client-secret)
 ```
 
 ---
@@ -647,7 +862,7 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 │           cd ~/Documents/GitHub + claude)   │
 │  3. /analysis "your question here"          │
 ├─────────────────────────────────────────────┤
-│  IF TOKEN EXPIRED                           │
+│  IF TOKEN EXPIRED (AWS Bedrock only)        │
 ├─────────────────────────────────────────────┤
 │  aws sso login --profile AIPlayground       │
 ├─────────────────────────────────────────────┤
@@ -658,11 +873,11 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 ├─────────────────────────────────────────────┤
 │  HELP                                       │
 ├─────────────────────────────────────────────┤
-│  AWS/Bedrock (Okta): #it-support            │
+│  AWS/Bedrock (Okta): #ask-it                │
 │  Inference Profiles: #team_infra            │
 │  Snowflake: #team_data_platform             │
-│  Looker: #analytics                         │
-│  1Password: #it-support                     │
+│  Looker: #ask-bst                           │
+│  1Password/Enterprise: #ask-it              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -670,13 +885,20 @@ The `clc` shortcut handles AWS login and launches Claude Code with all the right
 
 ## Placeholder Values Reference
 
+### Both Paths
+
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_USERNAME]` | macOS username | Run: `whoami` |
-| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE, e.g., `FIRSTNAMELASTNAME`) | Ticket #2 ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)) |
-| `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket #3 (#analytics) |
-| `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket #3 (store in 1Password) |
+| `[MY_SNOWFLAKE_USERNAME]` | Snowflake username (UPPERCASE, e.g., `FIRSTNAMELASTNAME`) | Ticket A ([#team_data_platform](https://elation.slack.com/archives/C03MUBG02SC)) |
+| `[MY_LOOKER_CLIENT_ID]` | Looker API Client ID | Ticket B (#ask-bst) |
+| `[MY_LOOKER_CLIENT_SECRET]` | Looker API Client Secret | Ticket B (store in 1Password) |
+
+### AWS Bedrock Path Only
+
+| Placeholder | Description | Where to Get |
+|-------------|-------------|--------------|
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #5 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #5 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #5 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #2 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #2 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #2 (#team_infra) |
