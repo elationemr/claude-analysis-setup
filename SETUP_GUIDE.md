@@ -99,7 +99,7 @@ Thank you!
 
 ---
 
-#### Ticket D: internal_dw GitHub Repository Access (Required)
+#### Ticket C: internal_dw GitHub Repository Access (Required)
 
 **Submit to:** Analytics Team (#ask-bst on Slack)
 
@@ -116,32 +116,6 @@ Thank you!
 
 **What you'll receive:**
 - GitHub access to `elationemr/internal_dw`
-
----
-
-#### Ticket C: 1Password Vault Access (If not already set up)
-
-**Submit to:** IT Support (#ask-it)
-
-**Subject:** 1Password CLI Setup for Development
-
-**Description:**
-```
-Hi IT Team,
-
-I need to use 1Password CLI to securely store API credentials for local development tools.
-
-Please confirm:
-1. I can install 1Password CLI (brew install --cask 1password-cli)
-2. I can use my employee vault for storing API tokens
-3. My 1Password account has CLI integration enabled
-
-Thank you!
-```
-
-**What you'll receive:**
-- Confirmation you can use 1Password CLI
-- Any required configuration steps
 
 ---
 
