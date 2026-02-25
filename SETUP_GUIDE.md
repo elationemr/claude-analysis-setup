@@ -474,7 +474,7 @@ Create ~/.dbt/profiles.yml with my credentials.
 ### 8. Test everything
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
-- Test Claude Code: clc (should start Claude Code)
+- Verify launcher alias: alias clc (confirm it's configured correctly)
 - Run a simple /analysis command
 
 Let's start with step 1!
@@ -562,7 +562,7 @@ This will open a browser - I need to log in with my work credentials.
 - Test AWS: aws sts get-caller-identity --profile AIPlayground
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
-- Test Claude Code: clc (should start Claude with Bedrock)
+- Verify launcher alias: alias clc (confirm it's configured correctly)
 - Run a simple /analysis command
 
 Let's start with step 1!
@@ -792,7 +792,7 @@ The `clc` shortcut handles authentication and launches Claude Code with all the 
 | Problem | Solution |
 |---------|----------|
 | "aws: command not found" | Run: `brew install awscli` *(AWS path only)* |
-| "Token has expired" | Run: `aws sso login --profile AIPlayground` *(AWS path only)* |
+| "Token has expired" or "Could not load credentials from any providers" | Run: `aws sso login --profile AIPlayground` *(AWS path only)*, then relaunch with `clc` |
 | "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
 | "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake account identifier (use account identifier only, not full URL) |
 | "SQL access control error / wrong role" | Ask #team_data_platform to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
