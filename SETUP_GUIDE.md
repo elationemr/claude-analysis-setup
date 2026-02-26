@@ -186,13 +186,11 @@ You should see: `Hi [your-username]! You've successfully authenticated...`
 
 **Subject:** Request access to internal_dw GitHub repository
 
-**Description** (fill in your GitHub username before sending):
+**Description:**
 ```
 Hi Analytics Team,
 
 I'm setting up Claude Code for business analysis and need read access to the internal_dw GitHub repository (elationemr/internal_dw).
-
-My GitHub username: [FIRSTNAME-elation]
 
 Thank you!
 ```
