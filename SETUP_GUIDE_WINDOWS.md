@@ -447,8 +447,17 @@ To find your profile path, run: `$PROFILE`
 # Uses personal auth with Windows Hello/PIN - works after initial sign-in
 
 function Load-ApiKeys {
-    $env:LOOKER_CLIENT_SECRET = (op read 'op://Employee/Looker API/client-secret' 2>$null)
-    Write-Host "✓ API keys loaded from 1Password"
+    $secret = (op read 'op://Employee/Looker API/client-secret' 2>$null)
+    if ($LASTEXITCODE -eq 0 -and $secret) {
+        $env:LOOKER_CLIENT_SECRET = $secret
+        Write-Host "✓ API keys loaded from 1Password"
+        return $true
+    } else {
+        Write-Host "✗ Could not load API keys from 1Password."
+        Write-Host "  Make sure 1Password is unlocked, then run: op signin"
+        Write-Host "  Then run: Load-ApiKeys  (or close and reopen PowerShell, then try 'clc' again)"
+        return $false
+    }
 }
 
 # ===========================================
@@ -474,8 +483,9 @@ $env:SNOWFLAKE_ROLE = "TEAM_PRODUCT_MANAGEMENT"
 # Loads API keys then launches Claude — run "clc" to start your session
 
 function clc {
-    Load-ApiKeys
-    claude
+    if (Load-ApiKeys) {
+        claude
+    }
 }
 ```
 
