@@ -555,7 +555,6 @@ Create ~/.dbt/profiles.yml with my credentials.
 ### 8. Test everything
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
-- Verify launcher alias: alias clc (confirm it's configured correctly)
 - Run a simple /analysis command
 
 Let's start with step 1!
