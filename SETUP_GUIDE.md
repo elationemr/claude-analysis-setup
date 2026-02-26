@@ -206,7 +206,7 @@ Thank you!
 
 ---
 
-#### Ticket 3: Claude Code Enterprise Access
+#### Ticket 1: Claude Code Enterprise Access
 
 **Submit to:** IT team (#ask-it)
 
@@ -230,7 +230,7 @@ Thank you!
 
 ---
 
-#### Ticket 1: AWS Bedrock Access (Required)
+#### Ticket 2: AWS Bedrock Access (Required)
 
 **Submit to:** IT Support (#ask-it)
 
@@ -253,7 +253,7 @@ Thank you!
 
 ---
 
-#### Ticket 2: Bedrock Inference Profiles (Required - submit after Ticket 1 is complete)
+#### Ticket 3: Bedrock Inference Profiles (Required - submit after Ticket 2 is complete)
 
 **Submit to:** Infrastructure Team (#team_infra on Slack)
 
@@ -287,7 +287,7 @@ After IT responds, fill in these values as you receive them.
 
 | Item | Value | Received? | Ticket |
 |------|-------|-----------|--------|
-| Claude Enterprise access (via Okta) | _________________ | ☐ | #3 |
+| Claude Enterprise access (via Okta) | _________________ | ☐ | #1 |
 | Snowflake Username | _________________ | ☐ | A |
 | Looker Client ID | _________________ | ☐ | B |
 | Looker Client Secret | _________________ | ☐ | B |
@@ -298,12 +298,12 @@ After IT responds, fill in these values as you receive them.
 
 | Item | Value | Received? | Ticket |
 |------|-------|-----------|--------|
-| AWS SSO Profile | `AIPlayground` | ☐ | #1 |
+| AWS SSO Profile | `AIPlayground` | ☐ | #2 |
 | Snowflake Username | _________________ | ☐ | A |
 | Looker Client ID | _________________ | ☐ | B |
 | Looker Client Secret | _________________ | ☐ | B |
-| Inference Profile ARN (sonnet) | _________________ | ☐ | #2 |
-| Inference Profile ARN (haiku) | _________________ | ☐ | #2 |
+| Inference Profile ARN (sonnet) | _________________ | ☐ | #3 |
+| Inference Profile ARN (haiku) | _________________ | ☐ | #3 |
 
 **Important:** You need ALL credentials before starting Phase 2.
 
@@ -976,6 +976,6 @@ The `clc` shortcut handles authentication and launches Claude Code with all the 
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #2 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #2 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #2 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #3 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #3 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #3 (#team_infra) |
