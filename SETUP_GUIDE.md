@@ -99,29 +99,104 @@ Thank you!
 
 ---
 
-#### Ticket C: 1Password Vault Access (If not already set up)
+#### Ticket C: GitHub Account & elationemr Organization Access (Required)
 
-**Submit to:** IT Support (#ask-it)
+##### Step 1: Create a GitHub Account
 
-**Subject:** 1Password CLI Setup for Development
+Before submitting to IT, create your GitHub account:
 
-**Description:**
+1. Go to [github.com/signup](https://github.com/signup)
+2. Use your Elation work email address
+3. Choose a username in this format: **`FIRSTNAME-elation`**
+   - Example: `jane-elation` or `john-elation`
+4. Complete email verification
+
+**Note:** If you already have a personal GitHub account, you can either create a new one with this naming convention or ask IT to use your existing account.
+
+##### Step 2: Submit the IT Ticket
+
+**Submit to:** IT team (#ask-it)
+
+**Subject:** Request access to elationemr GitHub organization
+
+**Description** (fill in your username and email before sending):
 ```
-Hi IT Team,
+Hi IT team,
 
-I need to use 1Password CLI to securely store API credentials for local development tools.
+I've created a GitHub account for work and need to be added to the elationemr GitHub organization.
 
-Please confirm:
-1. I can install 1Password CLI (brew install --cask 1password-cli)
-2. I can use my employee vault for storing API tokens
-3. My 1Password account has CLI integration enabled
+My GitHub username: [FIRSTNAME-elation, e.g. jane-elation]
+My work email: [your.name@elationhealth.com]
 
 Thank you!
 ```
 
 **What you'll receive:**
-- Confirmation you can use 1Password CLI
-- Any required configuration steps
+- An invitation to join the elationemr GitHub organization (sent to your work email)
+
+##### Step 3: After Receiving the Invitation — Configure GitHub SSH and SSO
+
+Once you receive and accept the elationemr invitation:
+
+**Generate an SSH key for GitHub**
+
+```bash
+ssh-keygen -t ed25519 -C "your.name@elationhealth.com"
+```
+
+Press Enter to accept all defaults (no passphrase required). Then display your public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the entire output.
+
+**Add the SSH key to GitHub**
+
+1. Go to [github.com](https://github.com) and sign in
+2. Click your profile picture (top right) → **Settings**
+3. In the left sidebar, click **SSH and GPG keys**
+4. Click **New SSH key**
+5. Give it a title (e.g., "Elation MacBook") and paste your public key
+6. Click **Add SSH key**
+
+**Authorize the SSH key for SSO**
+
+After adding the key, you'll see it listed under SSH keys:
+
+1. Find your newly added key
+2. Click **Configure SSO** next to it
+3. Click **Authorize** next to **elationemr**
+4. You will be redirected to sign in with your Okta credentials — complete the sign-in
+
+**Test the connection**
+
+```bash
+ssh -T git@github.com
+```
+
+You should see: `Hi [your-username]! You've successfully authenticated...`
+
+---
+
+#### Ticket D: internal_dw GitHub Repository Access (Required)
+
+**Submit to:** Analytics Team (#ask-bst on Slack)
+
+**Subject:** Request access to internal_dw GitHub repository
+
+**Description:**
+```
+Hi Analytics Team,
+
+I'm setting up Claude Code for business analysis and need read access to the internal_dw GitHub repository (elationemr/internal_dw).
+
+Thank you!
+```
+
+**What you'll receive:**
+- GitHub access to `elationemr/internal_dw`
 
 ---
 
@@ -129,7 +204,7 @@ Thank you!
 
 ---
 
-#### Ticket 3: Claude Code Enterprise Access
+#### Ticket 1: Claude Code Enterprise Access
 
 **Submit to:** IT team (#ask-it)
 
@@ -153,7 +228,7 @@ Thank you!
 
 ---
 
-#### Ticket 1: AWS Bedrock Access (Required)
+#### Ticket 2: AWS Bedrock Access (Required)
 
 **Submit to:** IT Support (#ask-it)
 
@@ -176,7 +251,7 @@ Thank you!
 
 ---
 
-#### Ticket 2: Bedrock Inference Profiles (Required - submit after Ticket 1 is complete)
+#### Ticket 3: Bedrock Inference Profiles (Required - submit after Ticket 2 is complete)
 
 **Submit to:** Infrastructure Team (#team_infra on Slack)
 
@@ -210,7 +285,7 @@ After IT responds, fill in these values as you receive them.
 
 | Item | Value | Received? | Ticket |
 |------|-------|-----------|--------|
-| Claude Enterprise access (via Okta) | _________________ | ☐ | #3 |
+| Claude Enterprise access (via Okta) | _________________ | ☐ | #1 |
 | Snowflake Username | _________________ | ☐ | A |
 | Looker Client ID | _________________ | ☐ | B |
 | Looker Client Secret | _________________ | ☐ | B |
@@ -221,12 +296,12 @@ After IT responds, fill in these values as you receive them.
 
 | Item | Value | Received? | Ticket |
 |------|-------|-----------|--------|
-| AWS SSO Profile | `AIPlayground` | ☐ | #1 |
+| AWS SSO Profile | `AIPlayground` | ☐ | #2 |
 | Snowflake Username | _________________ | ☐ | A |
 | Looker Client ID | _________________ | ☐ | B |
 | Looker Client Secret | _________________ | ☐ | B |
-| Inference Profile ARN (sonnet) | _________________ | ☐ | #2 |
-| Inference Profile ARN (haiku) | _________________ | ☐ | #2 |
+| Inference Profile ARN (sonnet) | _________________ | ☐ | #3 |
+| Inference Profile ARN (haiku) | _________________ | ☐ | #3 |
 
 **Important:** You need ALL credentials before starting Phase 2.
 
@@ -480,7 +555,7 @@ Create ~/.dbt/profiles.yml with my credentials.
 ### 8. Test everything
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
-- Test Claude Code: clc (should start Claude Code)
+- Verify launcher alias: alias clc (confirm it's configured correctly)
 - Run a simple /analysis command
 
 Let's start with step 1!
@@ -568,7 +643,7 @@ This will open a browser - I need to log in with my work credentials.
 - Test AWS: aws sts get-caller-identity --profile AIPlayground
 - Test Snowflake connection: dbt debug
 - Test 1Password: load_api_keys
-- Test Claude Code: clc (should start Claude with Bedrock)
+- Verify launcher alias: alias clc (confirm it's configured correctly)
 - Run a simple /analysis command
 
 Let's start with step 1!
@@ -798,7 +873,7 @@ The `clc` shortcut handles authentication and launches Claude Code with all the 
 | Problem | Solution |
 |---------|----------|
 | "aws: command not found" | Run: `brew install awscli` *(AWS path only)* |
-| "Token has expired" | Run: `aws sso login --profile AIPlayground` *(AWS path only)* |
+| "Token has expired" or "Could not load credentials from any providers" | Run: `aws sso login --profile AIPlayground` *(AWS path only)*, then relaunch with `clc` |
 | "Snowflake authentication failed" | Check that #team_data_platform registered your public key |
 | "`dbt debug` cannot connect to Snowflake" | Verify `account` in `~/.dbt/profiles.yml` matches your Snowflake account identifier (use account identifier only, not full URL) |
 | "SQL access control error / wrong role" | Ask #team_data_platform to confirm your default Snowflake role, or add `role:` in `~/.dbt/profiles.yml` only if needed |
@@ -899,6 +974,6 @@ The `clc` shortcut handles authentication and launches Claude Code with all the 
 | Placeholder | Description | Where to Get |
 |-------------|-------------|--------------|
 | `[MY_AWS_SSO_PROFILE]` | AWS SSO profile name | Always `AIPlayground` |
-| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #2 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #2 (#team_infra) |
-| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #2 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_DEFAULT]` | Bedrock default/sonnet model | Ticket #3 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_SONNET]` | Bedrock Sonnet model | Ticket #3 (#team_infra) |
+| `[INFERENCE_PROFILE_ARN_HAIKU]` | Bedrock Haiku model | Ticket #3 (#team_infra) |
