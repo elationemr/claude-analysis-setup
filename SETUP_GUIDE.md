@@ -99,17 +99,100 @@ Thank you!
 
 ---
 
-#### Ticket C: internal_dw GitHub Repository Access (Required)
+#### Ticket C: GitHub Account & elationemr Organization Access (Required)
+
+##### Step 1: Create a GitHub Account
+
+Before submitting to IT, create your GitHub account:
+
+1. Go to [github.com/signup](https://github.com/signup)
+2. Use your Elation work email address
+3. Choose a username in this format: **`FIRSTNAME-elation`**
+   - Example: `jane-elation` or `john-elation`
+4. Complete email verification
+
+**Note:** If you already have a personal GitHub account, you can either create a new one with this naming convention or ask IT to use your existing account.
+
+##### Step 2: Submit the IT Ticket
+
+**Submit to:** IT team (#ask-it)
+
+**Subject:** Request access to elationemr GitHub organization
+
+**Description** (fill in your username and email before sending):
+```
+Hi IT team,
+
+I've created a GitHub account for work and need to be added to the elationemr GitHub organization.
+
+My GitHub username: [FIRSTNAME-elation, e.g. jane-elation]
+My work email: [your.name@elationhealth.com]
+
+Thank you!
+```
+
+**What you'll receive:**
+- An invitation to join the elationemr GitHub organization (sent to your work email)
+
+##### Step 3: After Receiving the Invitation — Configure GitHub SSH and SSO
+
+Once you receive and accept the elationemr invitation:
+
+**Generate an SSH key for GitHub**
+
+```bash
+ssh-keygen -t ed25519 -C "your.name@elationhealth.com"
+```
+
+Press Enter to accept all defaults (no passphrase required). Then display your public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the entire output.
+
+**Add the SSH key to GitHub**
+
+1. Go to [github.com](https://github.com) and sign in
+2. Click your profile picture (top right) → **Settings**
+3. In the left sidebar, click **SSH and GPG keys**
+4. Click **New SSH key**
+5. Give it a title (e.g., "Elation MacBook") and paste your public key
+6. Click **Add SSH key**
+
+**Authorize the SSH key for SSO**
+
+After adding the key, you'll see it listed under SSH keys:
+
+1. Find your newly added key
+2. Click **Configure SSO** next to it
+3. Click **Authorize** next to **elationemr**
+4. You will be redirected to sign in with your Okta credentials — complete the sign-in
+
+**Test the connection**
+
+```bash
+ssh -T git@github.com
+```
+
+You should see: `Hi [your-username]! You've successfully authenticated...`
+
+---
+
+#### Ticket D: internal_dw GitHub Repository Access (Required)
 
 **Submit to:** Analytics Team (#ask-bst on Slack)
 
 **Subject:** Request access to internal_dw GitHub repository
 
-**Description:**
+**Description** (fill in your GitHub username before sending):
 ```
 Hi Analytics Team,
 
 I'm setting up Claude Code for business analysis and need read access to the internal_dw GitHub repository (elationemr/internal_dw).
+
+My GitHub username: [FIRSTNAME-elation]
 
 Thank you!
 ```
