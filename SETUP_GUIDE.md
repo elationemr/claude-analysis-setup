@@ -811,7 +811,7 @@ elation_health_snowflake:
       schema: SHARED
       threads: 10
       client_session_keep_alive: False
-      query_tag: DBT_CLAUDE_CODE
+      query_tag: DBT_CLAUDE_ANALYSIS
 ```
 
 **Notes:**
